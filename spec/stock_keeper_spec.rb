@@ -1,6 +1,9 @@
-require 'stock_keeper.rb'
+require 'yahoofinance'
+require '../lib/stock.rb'
+require '../lib/portfolio.rb'
+require '../lib/client.rb'
 
-describe Client
+describe Client do
 
   it "has a name and balance" do
   end
@@ -22,7 +25,7 @@ describe Client
 
 end
 
-describe Portfolio
+describe Portfolio do
 
   it "deletes a stock when the stock is sold" do
   end
@@ -38,12 +41,19 @@ describe Portfolio
 
 end
 
-describe Stock
+describe Stock do
 
-  it "has a name" do
+  it "initializes with a name and current price" do
+    stock = Stock.new('AAPL')
+    stock.name.should == 'AAPL'
+    stock.price.is_a?(Float).should == true
+    stock.price.should > 0
   end
 
   it "retrieves its current price from Yahoo Finance" do
+    stock = Stock.new('AAPL')
+    stock.price.is_a?(Float).should == true
+    stock.price.should > 0
   end
 
 end
