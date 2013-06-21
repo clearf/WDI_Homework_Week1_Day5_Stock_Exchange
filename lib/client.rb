@@ -1,13 +1,9 @@
-require
-
 class Client
+  attr_accessor :name, :balance, :portfolios, :portfolios_total_value
 
-  attr_accessor :name, :balance, :portfolios
-
-  def initialize(name, balance, portfolios=nil)
+  def initialize(name, balance, portfolios={})
     @name = name
     @balance = balance
+    @portfolios = portfolios
   end
-
-
 end
