@@ -1,9 +1,11 @@
+require_relative 'bank'
+
 class Client
   attr_accessor :portfolios, :name, :balance
   def initialize(name, balance)
     @name = name
     @balance = balance
-    @portfolios = []
+    @portfolios = {}
   end
 
   def new_portfolio(name)

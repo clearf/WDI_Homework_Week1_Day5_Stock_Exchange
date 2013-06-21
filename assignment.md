@@ -10,14 +10,23 @@ Create a stock management program using TDD. It has to:
 * Create an account for client (name, balance).
 * Every client can create multiple portfolios.
 * A client can buy stocks at market rate; these stocks will be added to a portfolio and the purchase amount subtracted from cash. (You cannot go to a negative cash balance).
+
+#add function in portfolio to buy stock
+  -which adds stock to portfolio
+
+
 * A client can sell a stock. The proceeds go into his account.
+
+#add function that sells stock
+
+
 * List all client portfolios and their values (each portfolio value and sum of portfolio values) and the account balance.
 * List all stocks in a portfolio.
 * List all clients.
 
 **Note:**
 
-Each time a portfolio balance is calculated, the program needs to go out to the web and get current 
+Each time a portfolio balance is calculated, the program needs to go out to the web and get current
 stock prices.
 
 Hint: in your Gemfile, add the yahoofinance gem

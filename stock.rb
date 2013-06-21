@@ -1,4 +1,6 @@
+require_relative 'portfolio'
 require 'yahoofinance'
+
 #require 'Gemfile'
 
 class Stock
@@ -21,10 +23,8 @@ class Stock
   end
 
   def to_s
-    "#{@ticker} is trading at #{@price} (Total Value = #{value})"
+    "#{@ticker} , P = #{@price} , NAV = #{value})"
   end
-
-
 end
 
 
