@@ -17,6 +17,7 @@ ez_bank.clients["gandalf"].new_portfolio("money maker")
 ez_bank.clients["god"].new_portfolio("world atm")
 
 #Add Stocks to Portfolio
+
 ez_bank.clients["gandalf"].portfolios["money maker"].buy_stock("AAPL", 200)
 ez_bank.clients["gandalf"].portfolios["money maker"].buy_stock("MNKD", 100)
 ez_bank.clients["gandalf"].portfolios["money maker"].buy_stock("GOOG", 300)
@@ -26,9 +27,13 @@ ez_bank.clients["gandalf"].portfolios.each { |key, value| puts value.name}
 # shows stock ticker, price, and total value (with shares) of Portfolio
 ez_bank.clients["gandalf"].portfolios["money maker"].stocks.each {|key, value| puts value}
 
-#not working yet
-#ez_bank.clients["gandalf"].portfolios["money maker"].sell_stock("AAPL")
-#ez_bank.clients["gandalf"].portfolios["money maker"].stocks.each {|key, value| puts value}
+####
+puts ""
+puts "Apple's new iPhone received terrible reviews. As a result, Gandalf sold all his Apple stock."
+puts ""
+#not working
+ez_bank.clients["gandalf"].portfolios["money maker"].sell_stock("AAPL")
+ez_bank.clients["gandalf"].portfolios["money maker"].stocks.each {|key, value| puts value}
 
 
 

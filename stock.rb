@@ -10,6 +10,7 @@ class Stock
     @ticker = ticker
     @num_shares = num_shares
     @price = get_price
+    @value = (@price * @num_shares)
   end
 
   def get_price
@@ -18,12 +19,8 @@ class Stock
     end
   end
 
-  def value
-    @price * @num_shares
-  end
-
   def to_s
-    "#{@ticker} , P = #{@price} , NAV = #{value})"
+    "#{@ticker} , P = #{@price} , NAV = #{@value})"
   end
 end
 
