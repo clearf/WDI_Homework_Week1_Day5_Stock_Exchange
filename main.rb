@@ -15,17 +15,20 @@ ez_bank.new_client("god", 20)
 #Created Portfolios
 ez_bank.clients["gandalf"].new_portfolio("money maker")
 ez_bank.clients["god"].new_portfolio("world atm")
-# shows portfolio name
-# ez_bank.clients["gandalf"].portfolios.each { |key, value| puts value.name}
 
-#Add Stocks
+#Add Stocks to Portfolio
 ez_bank.clients["gandalf"].portfolios["money maker"].buy_stock("AAPL", 200)
+ez_bank.clients["gandalf"].portfolios["money maker"].buy_stock("MNKD", 100)
+ez_bank.clients["gandalf"].portfolios["money maker"].buy_stock("GOOG", 300)
 
-# shows stock ticker, price, and total value (with shares)
-#ez_bank.clients["gandalf"].portfolios["money maker"].stocks.each {|key, value| puts value}
+# shows portfolio name
+ez_bank.clients["gandalf"].portfolios.each { |key, value| puts value.name}
+# shows stock ticker, price, and total value (with shares) of Portfolio
+ez_bank.clients["gandalf"].portfolios["money maker"].stocks.each {|key, value| puts value}
 
 #not working yet
-##### ez_bank.clients["gandalf"].portfolios["money maker"].sell_stock("AAPL") #####
+#ez_bank.clients["gandalf"].portfolios["money maker"].sell_stock("AAPL")
+#ez_bank.clients["gandalf"].portfolios["money maker"].stocks.each {|key, value| puts value}
 
 
 

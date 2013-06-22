@@ -11,7 +11,7 @@ class Portfolio
 
   def buy_stock(ticker, num_shares)
       stock = Stock.new(ticker, num_shares)
-      stocks[name.to_s] = stock
+      @stocks[ticker] = stock
   end
 
 #not working...yet
