@@ -36,7 +36,6 @@ describe Portfolio do
   it "calculates its own value" do
   # the Portfolio iterates through its set of stocks
   # and adds each stock's current price
-
   end
 
 end
@@ -44,16 +43,16 @@ end
 describe Stock do
 
   it "initializes with a name and current price" do
-    stock = Stock.new('AAPL')
+    stock = Stock.new('AAPL', 50)
     stock.name.should == 'AAPL'
-    stock.price.is_a?(Float).should == true
-    stock.price.should > 0
+    stock.total_price.is_a?(Float).should == true
+    stock.total_price.should > 0
   end
 
   it "retrieves its current price from Yahoo Finance" do
-    stock = Stock.new('AAPL')
-    stock.price.is_a?(Float).should == true
-    stock.price.should > 0
+    stock = Stock.new('AAPL', 50)
+    stock.total_price.is_a?(Float).should == true
+    stock.total_price.should > 0
   end
 
 end
