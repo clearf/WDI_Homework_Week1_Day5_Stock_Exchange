@@ -14,7 +14,6 @@ class Portfolio
       @stocks[ticker] = stock
   end
 
-#not working...yet
   def sell_stock(name)
     @stocks.delete(name)
   end
