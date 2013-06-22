@@ -25,21 +25,21 @@ ez_bank.clients["gandalf"].portfolios["money maker"].buy_stock("GOOG", 300)
 # shows portfolio name
 ez_bank.clients["gandalf"].portfolios.each { |key, value| puts value.name}
 # shows stock ticker, price, and total value (with shares) of Portfolio
-ez_bank.clients["gandalf"].portfolios["money maker"].stocks.each {|key, value| puts value}
+ez_bank.clients["gandalf"].portfolios["money maker"].stocks.each {|key, value| puts value.print_stock_info}
+
+puts ""
+puts "Trying to put balance here:"
+# shows portfolio balance
+ez_bank.clients["gandalf"].portfolios["money maker"].balance
 
 ####
 puts ""
 puts "Apple's new iPhone received terrible reviews. As a result, Gandalf sold all his Apple stock."
 puts ""
-#not working
+
+#Sells Stock
 ez_bank.clients["gandalf"].portfolios["money maker"].sell_stock("AAPL")
-ez_bank.clients["gandalf"].portfolios["money maker"].stocks.each {|key, value| puts value}
 
+#Prints Updated Balance
+ez_bank.clients["gandalf"].portfolios["money maker"].stocks.each {|key, value| puts value.print_stock_info}
 
-
-
-
-
-
-#client_1 = Client.new("Gandalf", 1000000)
-#client_2 = Client.new("God", 20)
