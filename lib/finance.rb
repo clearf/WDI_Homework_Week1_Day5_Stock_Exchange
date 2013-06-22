@@ -1,7 +1,7 @@
 require 'YahooFinance'
 
 class Client
-  attr_accessor :name, :account_balance,
+  attr_accessor :name, :account_balance
   def initialize(name, account_balance)
     @name = name
     @account_balance = account_balance
@@ -22,16 +22,20 @@ end
 
 class Stock
   attr_accessor :company, :share_price
-  def initialize(company, share_price) #get share price from API
+  def initialize(company) #get share price from API
     @company = company
+    @share_price = get_share_price()
   end
 
   def get_share_price()
-    return YahooFinance::get_quotes(YahooFinance::StandardQuote, 'AAPL')['AAPL'].lastTrade
+    return YahooFinance::get_quotes(YahooFinance::StandardQuote, @company)[@company].lastTrade
   end
 
   def to_s
     "#{@company} has a share price of #{@share_price}"
   end
 
- end
+end
+
+apple = Stock.new('AAPL')
+microsoft = Stock.new('MSFT')
