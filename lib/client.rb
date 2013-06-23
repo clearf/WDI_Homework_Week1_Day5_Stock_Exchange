@@ -47,4 +47,7 @@ class Client
     end
   end
 
+  def to_s
+    return "the client, #{@name} has a total cash balance of #{@balance} dollars, has #{@portoflios} worth #{@portfolios_total_value}."
+
 end
