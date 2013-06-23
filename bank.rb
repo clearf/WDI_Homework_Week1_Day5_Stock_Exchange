@@ -31,9 +31,13 @@ class Bank
     current_client.portfolios.each {|name, portfolio| puts "Portfolio: " + name;
                                     current_portfolio_value = portfolio.get_portfolio_value;
                                     total_portfolios_value += current_portfolio_value;
-                                    puts "Value: $" + current_portfolio_value.to_s}
-    puts "Total value of all portfolios: " + "$" + sprintf("%.2f", total_portfolios_value).reverse.gsub(%r{([0-9]{3}(?=([0-9])))}, "\\1,").reverse
+                                    puts "Value: $" + number_to_currency(current_portfolio_value)}
+    puts "Total value of all portfolios: " + "$" + number_to_currency(total_portfolios_value)
     puts "Balance: " +
-    "$" + sprintf("%.2f", current_client.balance).reverse.gsub(%r{([0-9]{3}(?=([0-9])))}, "\\1,").reverse + "\n\n"
+    "$" + number_to_currency(current_client.balance) + "\n\n"
+  end
+
+  def Bank.number_to_currency(num)
+    sprintf("%.2f", num).reverse.gsub(%r{([0-9]{3}(?=([0-9])))}, "\\1,").reverse
   end
 end

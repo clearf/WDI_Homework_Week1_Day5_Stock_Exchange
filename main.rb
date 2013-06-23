@@ -3,6 +3,10 @@ require_relative 'stock'
 require_relative 'portfolio'
 require_relative 'bank'
 
+def number_to_currency(num)
+  sprintf("%.2f", num).reverse.gsub(%r{([0-9]{3}(?=([0-9])))}, "\\1,").reverse
+end
+
 #Create Bank
 ez_bank = Bank.new
 puts "\nThe bank has no clients, show client list:\n"
@@ -27,11 +31,11 @@ jeff_medium_risk = jeff_jones.new_portfolio("Medium Risk")
 kira_medium_risk = kira_macdonald.new_portfolio("Medium Risk")
 
 # Buy and sell some stocks
-puts "Current value of Jeff's stocks: $" + sprintf("%.2f", jeff_jones.value_of_all_stocks).reverse.gsub(%r{([0-9]{3}(?=([0-9])))}, "\\1,").reverse
+puts "Current value of Jeff's stocks: $" + Bank.number_to_currency(jeff_jones.value_of_all_stocks)
 jeff_jones.buy_stock("AAPL", 100, "High Risk")
-puts "\nCurrent value of Jeff's stocks: $" +sprintf("%.2f", jeff_jones.value_of_all_stocks).reverse.gsub(%r{([0-9]{3}(?=([0-9])))}, "\\1,").reverse
+puts "\nCurrent value of Jeff's stocks: $" + Bank.number_to_currency(jeff_jones.value_of_all_stocks)
 jeff_jones.sell_stock("AAPL", 100, "High Risk")
-puts "\nCurrent value of Jeff's stocks: $" + sprintf("%.2f", jeff_jones.value_of_all_stocks).reverse.gsub(%r{([0-9]{3}(?=([0-9])))}, "\\1,").reverse
+puts "\nCurrent value of Jeff's stocks: $" + Bank.number_to_currency(jeff_jones.value_of_all_stocks)
 puts "\nClient Reports: "
 ez_bank.show_client_report(jeff_jones)
 
