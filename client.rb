@@ -15,10 +15,12 @@ class Client
   def buy_stock(ticker, share, port)
     market_price = YahooFinance::get_quotes(YahooFinance::StandardQuote, ticker)[ticker].lastTrade
     stock_value = market_price * share
+
+    # check current balance
     if @balance < stock_value
       puts "BUY FAIL: You try to purchase #{share} shares of #{ticker} but your balance is too low, order is canceled.\n\n"
     else
-      new_stock = Stock.new(ticker, market_price, share) #goes into the if statement below ****
+      new_stock = Stock.new(ticker, market_price, share)
       @portfolio[port.to_sym] << new_stock
       @balance -= stock_value.to_i
       puts "BUY: Your have purchased #{share} shares of #{ticker} for a total value of $#{stock_value}.\nYour new balance is now $#{@balance}.\n\n"
@@ -29,7 +31,7 @@ class Client
     market_price = YahooFinance::get_quotes(YahooFinance::StandardQuote, ticker)[ticker].lastTrade
     stock_value = market_price * share
 
-    # checking if the stock exists in users portfolio
+    # check if the stock actually exists in users portfolio
     ticker_array = []
     @portfolio[port.to_sym].each { |stock| ticker_array << stock.ticker }
 
@@ -66,7 +68,7 @@ class Client
       key = key.upcase
 
       if total_stock_value.length > 1
-        total_stock_value.inject do |sum, x| # only runs when portfolio has two or more stocks
+        total_stock_value.inject do |sum, x|
           addup = sum + x
           puts "#{key}: $#{addup}"
         end
