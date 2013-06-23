@@ -22,12 +22,13 @@ class Client
   end
 
 #updates client's balance after withdrawing money
+### To Do: Don't let balance go negative
   def withdraw_cash(withdraw_amount)
     @balance -= withdraw_amount
   end
 
 #updates client's balance after buying stock
-###need to fix. want to push stock if stock is not already in portfolio array
+### To Do: Check if you can afford to buy
   def buy_stock(stock, number_of_shares_to_buy)
     stock.shares += number_of_shares_to_buy
     total_value = number_of_shares_to_buy * stock.price
@@ -38,6 +39,7 @@ class Client
   end
 
 #updates client's balance after selling stock
+### To Do: Add logic to check if you own that many shares
   def sell_stock(stock, number_of_shares_to_sell)
     stock.shares -= number_of_shares_to_sell
     total_value = number_of_shares_to_sell * stock.price
@@ -45,7 +47,7 @@ class Client
   end
 
   def to_s
-    return "#{@name} has a balance of #{@balance}"
+    return "#{@name} has a balance of #{@balance}."
   end
 end
 
@@ -79,11 +81,11 @@ s1 = Stock.new("Cisco Systems", "CSCO", 2, "Technology", 100)
 s2 = Stock.new("IBM", "IBM", 1, "Technology", 500)
 s3 = Stock.new("Wendy's", "WEN", 1, "Food", 0)
 client1 = Client.new("Alphonse Von der Strudel", 1000)
-client1.portfolio << [s1]
-client1.portfolio << [s2]
+client1.portfolio << s1
+client1.portfolio << s2
 
 
-#portfolio is an array and item is a stock(arrays)
+#portfolio is an array and items are instances of the stock class
 #####Gives readout#####
 
 puts "#{client1.name}'s balance = $#{client1.balance}"
@@ -97,5 +99,6 @@ puts "----------------------------"
 puts "#{client1.name}'s balance = $#{client1.balance}"
 
 binding.pry
+
 
 
