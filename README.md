@@ -1,4 +1,4 @@
-WDI First Week Program - Stock Exchange
+WDI - Stock Exchange
 =================
 
 #### Introduction
