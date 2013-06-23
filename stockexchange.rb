@@ -14,7 +14,7 @@ kevin.create_portfolio("moneymaker")
 kevin.create_portfolio("winner")
 
 alina.create_portfolio("boss")
-# alina.create_portfolio("partylikearockstar")
+alina.create_portfolio("partylikearockstar")
 
 # A client can buy stocks at market rate; these stocks will be added to a portfolio and the purchase amount subtracted from cash. (You cannot go to a negative cash balance).
 kevin.buy_stock("AAPL", 5000, "moneymaker")
@@ -27,7 +27,9 @@ kevin.buy_stock("EGAS", 30000, "moneymaker")
 alina.buy_stock("EXC", 1500, "boss")
 alina.buy_stock("NOK", 500, "boss")
 alina.buy_stock("AMT", 2500, "boss")
-# alina.buy_stock("AAPL", 300, "partylikearockstar")
+alina.buy_stock("AAPL", 300, "partylikearockstar")
+alina.buy_stock("GOOG", 300, "partylikearockstar")
+
 
 
 # A client can sell a stock. The proceeds go into his account.
@@ -41,7 +43,7 @@ alina.sell_stock("EXC", 1550, "boss") # designed to fail
 
 # List all client portfolios and their values (each portfolio value and sum of portfolio values) and the account balance.
 kevin.list_portfolio
-# alina.list_portfolio
+alina.list_portfolio
 
 # List all stocks in a portfolio.
 kevin.list_stock("moneymaker")
