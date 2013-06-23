@@ -5,7 +5,7 @@ class Client
     @name = name
     @balance = balance
     @portfolio = {}
-    @addup = 0
+    @portfolio_total_value = 0
   end
 
   def create_portfolio(port_name)
@@ -81,9 +81,9 @@ class Client
       if total_stock_value.length > 1
         # puts "nasty"
         total_stock_value.inject do |sum, x|
-          @addup = sum + x
+          @portfolio_total_value = sum + x
         end
-          puts "#{key}: $#{@addup}"
+          puts "#{key}: $#{@portfolio_total_value}"
       elsif total_stock_value.length == 1
         puts "#{key}: $#{total_stock_value[0]}"
       else
