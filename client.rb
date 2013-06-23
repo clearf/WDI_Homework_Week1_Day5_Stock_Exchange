@@ -55,7 +55,7 @@ class Client
   def sell_stock(ticker, num_shares, portfolio)
     stock = @portfolios[portfolio].stocks[ticker]
     stock.num_shares -= num_shares
-    @balance -= stock.get_price * num_shares
+    @balance += stock.get_price * num_shares
   end
 
   # Returns the total value of all stocks

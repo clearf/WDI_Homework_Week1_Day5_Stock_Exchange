@@ -25,14 +25,15 @@ class Bank
   # Display the total value of all of the client's portfolios
   # and the cash balance left in his account.
   def show_client_report(client)
-    current_client = @clients[client]
+    current_client = @clients[client.name]
     total_portfolios_value = 0
     puts current_client.name + ": "
     current_client.portfolios.each {|name, portfolio| puts "Portfolio: " + name;
                                     current_portfolio_value = portfolio.get_portfolio_value;
                                     total_portfolios_value += current_portfolio_value;
                                     puts "Value: $" + current_portfolio_value.to_s}
-    puts "Total value of all portfolios: #{total_portfolios_value}"
-    puts "Balance: $" + current_client.balance.to_s
+    puts "Total value of all portfolios: " + "$" + sprintf("%.2f", total_portfolios_value).reverse.gsub(%r{([0-9]{3}(?=([0-9])))}, "\\1,").reverse
+    puts "Balance: " +
+    "$" + sprintf("%.2f", current_client.balance).reverse.gsub(%r{([0-9]{3}(?=([0-9])))}, "\\1,").reverse + "\n\n"
   end
 end
