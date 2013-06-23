@@ -5,7 +5,7 @@ require 'yahoofinance'
 
 # Create an account for client (name, balance).
 kevin = Client.new("Kevin", 10_000_000)
-puts "A new client, #{kevin.name} has walked in.\n\n"
+puts "A new client, #{kevin.name}, has walked in.\n\n"
 
 alina = Client.new("Alina", 2_000_000)
 
@@ -18,11 +18,13 @@ kevin.buy_stock("AAPL", 5000, "nyse")
 kevin.buy_stock("GOOG", 1000, "hkse")
 kevin.buy_stock("TSLA", 3000, "nyse")
 kevin.buy_stock("SBAC", 7500, "hkse")
+kevin.buy_stock("GOOG", 300, "hkse")
 
 # A client can sell a stock. The proceeds go into his account.
 kevin.sell_stock("AAPL", 2000, "nyse")
 kevin.sell_stock("TSLA", 2000, "nyse")
 kevin.sell_stock("SBAC", 4000, "hkse")
+kevin.sell_stock("GOOG", 300, "hkse")
 
 # List all client portfolios and their values (each portfolio value and sum of portfolio values) and the account balance.
 kevin.list_portfolio

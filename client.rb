@@ -16,14 +16,24 @@ class Client
     market_price = YahooFinance::get_quotes(YahooFinance::StandardQuote, ticker)[ticker].lastTrade
     stock_value = market_price * share
 
+    # check if the stock already exists in users portfolio
+    ticker_array = []
+    @portfolio[port.to_sym].each { |stock| ticker_array << stock.ticker }
+
     # check current balance
     if @balance < stock_value
       puts "BUY FAIL: You try to purchase #{share} shares of #{ticker} but your balance is too low, order is canceled.\n\n"
     else
-      new_stock = Stock.new(ticker, market_price, share)
-      @portfolio[port.to_sym] << new_stock
-      @balance -= stock_value.to_i
-      puts "BUY: Your have purchased #{share} shares of #{ticker} for a total value of $#{stock_value}.\nYour new balance is now $#{@balance}.\n\n"
+      if ticker_array.include?(ticker)
+        find_index = ticker_array.index(ticker)
+        show_existing_share = @portfolio[port.to_sym][find_index].share
+        @portfolio[port.to_sym][find_index].share += share
+      else
+        new_stock = Stock.new(ticker, market_price, share)
+        @portfolio[port.to_sym] << new_stock
+      end
+        @balance -= stock_value.to_i
+        puts "BUY: Your have purchased #{share} shares of #{ticker} for a total value of $#{stock_value}.\nYour new balance is now $#{@balance}.\n\n"
     end
   end
 
@@ -86,7 +96,7 @@ class Client
   def list_stock(port)
     puts "Your portfolio " + port.upcase + " currently has: "
     @portfolio[port.to_sym].each do |stock|
-      puts "#{stock.ticker} - #{stock.share} shares - $#{stock.market_price} "
+      puts "#{stock.ticker} - #{stock.share} shares - Current Price: $#{stock.market_price} "
     end
     puts "\n"
   end
