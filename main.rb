@@ -34,6 +34,8 @@ kira_medium_risk = kira_macdonald.new_portfolio("Medium Risk")
 puts "Current value of Jeff's stocks: $" + Bank.number_to_currency(jeff_jones.value_of_all_stocks)
 jeff_jones.buy_stock("AAPL", 100, "High Risk")
 puts "\nCurrent value of Jeff's stocks: $" + Bank.number_to_currency(jeff_jones.value_of_all_stocks)
+puts "\nClient Reports: "
+ez_bank.show_client_report(jeff_jones)
 jeff_jones.sell_stock("AAPL", 100, "High Risk")
 puts "\nCurrent value of Jeff's stocks: $" + Bank.number_to_currency(jeff_jones.value_of_all_stocks)
 puts "\nClient Reports: "
