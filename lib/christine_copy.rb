@@ -63,13 +63,17 @@ class Client
 
 #updates client's balance after selling stock and updates portfolio
 #deletes stock from portfolio if client sold all of the shares
-### To Do: Add logic to check if you own that many shares
+#won't let the client sell shares if the client doesn't have enough shares to sell
   def sell_stock(stock, number_of_shares_to_sell)
-    stock.shares -= number_of_shares_to_sell
-    total_value = number_of_shares_to_sell * stock.price
-    @balance += total_value
-    if stock.shares == 0
-      @portfolio.delete(stock)
+    if stock.shares >= number_of_shares_to_sell
+      stock.shares -= number_of_shares_to_sell
+      total_value = number_of_shares_to_sell * stock.price
+      @balance += total_value
+      if stock.shares == 0
+        @portfolio.delete(stock)
+      end
+    else
+      puts "You do not own enough shares to sell that number."
     end
   end
 
