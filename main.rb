@@ -7,19 +7,20 @@ require_relative 'bank'
 ez_bank = Bank.new
 
 #Created Clients
-gandalf = ez_bank.new_client("gandalf", 50000)
+gandalf = ez_bank.new_client("gandalf", 50000000)
 god = ez_bank.new_client("god", 20)
 
 #Created Portfolios
 money_maker = gandalf.new_portfolio("money maker")
 world_atm = god.new_portfolio("world atm")
+puts "$" + sprintf("%.2f", gandalf.value_of_all_stocks).reverse.gsub(%r{([0-9]{3}(?=([0-9])))}, "\\1,").reverse
 gandalf.buy_stock("AAPL", 100, "money maker")
-puts gandalf.value_of_all_stocks
-gandalf.sell_stock("AAPL", 10, "money maker")
-puts gandalf.value_of_all_stocks
-ez_bank.show_client_report("gandalf")
-ez_bank.list_clients()
-money_maker.list_stocks()
+puts "$" +sprintf("%.2f", gandalf.value_of_all_stocks).reverse.gsub(%r{([0-9]{3}(?=([0-9])))}, "\\1,").reverse
+gandalf.sell_stock("AAPL", 100, "money maker")
+puts "$" + sprintf("%.2f", gandalf.value_of_all_stocks).reverse.gsub(%r{([0-9]{3}(?=([0-9])))}, "\\1,").reverse
+#ez_bank.show_client_report("gandalf")
+#ez_bank.list_clients()
+#money_maker.list_stocks()
 
 
 
