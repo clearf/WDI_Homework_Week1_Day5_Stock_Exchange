@@ -11,7 +11,21 @@ class Stock
     @total_price = ( YahooFinance::get_quotes(YahooFinance::StandardQuote, @name)[@name].lastTrade ) * num_of_shares
   end
 
-  def get_price
+  def buy_shares(num_of_shares_to_buy)
+    num_of_shares += num_of_shares_to_buy
+    get_total_price
+  end
+
+  def sell_shares(num_of_shares_to_sell)
+    if num_of_shares_to_sell <= num_of_shares
+      num_of_shares -= num_of_shares_to_sell
+      get_total_price
+    else
+      puts "You don't have #{num_of_shares_to_sell} shares to sell."
+    end
+  end
+
+  def get_total_price
     @total_price = ( YahooFinance::get_quotes(YahooFinance::StandardQuote, @name)[@name].lastTrade ) * num_of_shares
     return @total_price
   end
