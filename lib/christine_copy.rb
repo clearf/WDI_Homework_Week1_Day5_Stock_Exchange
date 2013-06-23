@@ -101,4 +101,3 @@ puts "#{client1.name}'s balance = $#{client1.balance}"
 binding.pry
 
 
-
