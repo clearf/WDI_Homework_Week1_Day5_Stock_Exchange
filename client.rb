@@ -32,6 +32,7 @@ class Client
     stock_value = market_price * share
 
     # check if the stock actually exists in users portfolio
+    # if yes, find associated share amount by index of array
     ticker_array = []
     @portfolio[port.to_sym].each { |stock| ticker_array << stock.ticker }
 
