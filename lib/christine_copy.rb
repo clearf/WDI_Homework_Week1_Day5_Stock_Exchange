@@ -5,6 +5,15 @@ class FinancialInstitution
   def initialize()
     @clients = []
   end
+
+  def client_list
+  end
+
+  def client_portfolios_list
+  end
+
+  def client_portfolios_stocks_list
+  end
 end
 
 
@@ -27,7 +36,8 @@ class Client
     @balance -= withdraw_amount
   end
 
-#updates client's balance after buying stock
+#updates client's balance after buying stock and updates portolio
+#adds stock to portfolio if stock does not already exist in portfolio
 ### To Do: Check if you can afford to buy
   def buy_stock(stock, number_of_shares_to_buy)
     stock.shares += number_of_shares_to_buy
@@ -38,12 +48,16 @@ class Client
     end
   end
 
-#updates client's balance after selling stock
+#updates client's balance after selling stock and updates portfolio
+#deletes stock from portfolio if client sold all of the shares
 ### To Do: Add logic to check if you own that many shares
   def sell_stock(stock, number_of_shares_to_sell)
     stock.shares -= number_of_shares_to_sell
     total_value = number_of_shares_to_sell * stock.price
     @balance += total_value
+    if stock.shares == 0
+      @portfolio.delete(stock)
+    end
   end
 
   def to_s
@@ -91,9 +105,10 @@ client1.portfolio << s2
 puts "#{client1.name}'s balance = $#{client1.balance}"
 
 
-client1.buy_stock(s1, 200)
-client1.buy_stock(s3, 100)
-#client1.sell_stock(s3, 100)
+# client1.buy_stock(s1, 200)
+# client1.buy_stock(s3, 100)
+client1.sell_stock(s1, 100)
+client1.sell_stock(s2, 400)
 puts "----------------------------"
 
 puts "#{client1.name}'s balance = $#{client1.balance}"
