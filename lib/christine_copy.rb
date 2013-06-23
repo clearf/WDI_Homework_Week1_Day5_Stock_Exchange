@@ -45,15 +45,19 @@ class Client
     @balance -= withdraw_amount
   end
 
-#updates client's balance after buying stock and updates portolio
+#updates client's balance after buying stock and updates portfolio
 #adds stock to portfolio if stock does not already exist in portfolio
-### To Do: Check if you can afford to buy
+#won't let client buy shares if balance is not high enough
   def buy_stock(stock, number_of_shares_to_buy)
-    stock.shares += number_of_shares_to_buy
     total_value = number_of_shares_to_buy * stock.price
-    @balance -= total_value
-    unless @portfolio.include?(stock)
+    if @balance >= total_value
+      stock.shares += number_of_shares_to_buy
+      @balance -= total_value
+      unless @portfolio.include?(stock)
       @portfolio << stock
+      end
+    else
+      puts "You do not have enough money to buy that many shares."
     end
   end
 
