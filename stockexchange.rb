@@ -1,8 +1,6 @@
 require './client'
 require './stock'
-# require './portfolio' # Portfolio class is not neccessary
 require 'yahoofinance'
-require 'pry'
 
 
 # Create an account for client (name, balance).
@@ -35,5 +33,3 @@ kevin.list_stock("hkse")
 
 # List all clients.
 Client.list_all
-
-# binding.pry
