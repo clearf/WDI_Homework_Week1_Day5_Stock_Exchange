@@ -31,9 +31,16 @@ class Client
   end
 
 #updates client's balance after withdrawing money
-### To Do: Don't let balance go negative
-  def withdraw_cash(withdraw_amount)
-    @balance -= withdraw_amount
+#will not let allow client to withdraw more money than balance
+  def withdraw_cash()
+    puts "Withdrawal amount?"
+    withdraw_amount = gets.to_f
+    while @balance < withdraw_amount
+      puts "You do not have enough money to withdraw that amount."
+      puts "Try again. Withdrawal amount?"
+      withdraw_amount = gets.to_f
+    end
+      @balance -= withdraw_amount
   end
 
 #updates client's balance after buying stock and updates portolio
@@ -107,8 +114,9 @@ puts "#{client1.name}'s balance = $#{client1.balance}"
 
 # client1.buy_stock(s1, 200)
 # client1.buy_stock(s3, 100)
-client1.sell_stock(s1, 100)
-client1.sell_stock(s2, 400)
+# client1.sell_stock(s1, 100)
+# client1.sell_stock(s2, 400)
+client1.withdraw_cash
 puts "----------------------------"
 
 puts "#{client1.name}'s balance = $#{client1.balance}"
