@@ -1,6 +1,4 @@
-require_relative 'client'
 require_relative 'stock'
-require_relative 'bank'
 
 class Portfolio
     attr_accessor :stocks, :name
@@ -10,20 +8,14 @@ class Portfolio
       @stocks = {}
     end
 
-
-    def buy_stock(ticker, num_shares)
-        stock = Stock.new(ticker, num_shares)
-        @stocks[ticker] = stock
+    def list_stocks()
+      puts "List of all stocks in the #{@name} portfolio: "
+      @stocks.each {|name, stock| puts name}
     end
 
-    def sell_stock(name)
-      @stocks.delete(name)
-    end
-
-    def balance
-      puts @stocks.keys
-      total = 0
-      @stocks.each { |key, stock| total += stock.value }
-      puts total
+    def get_portfolio_value()
+      value = 0
+      @stocks.each {|name, stock| value += stock.get_price * stock.num_shares}
+      return value
     end
 end
