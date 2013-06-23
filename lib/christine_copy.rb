@@ -26,7 +26,9 @@ class Client
   end
 
 #updates client's balance after depositing money
-  def deposit_cash(deposit_amount)
+  def deposit_cash()
+    puts "Deposit amount?"
+    deposit_amount = gets.to_f
     @balance += deposit_amount
   end
 
@@ -40,7 +42,7 @@ class Client
       puts "Try again. Withdrawal amount?"
       withdraw_amount = gets.to_f
     end
-      @balance -= withdraw_amount
+    @balance -= withdraw_amount
   end
 
 #updates client's balance after buying stock and updates portolio
