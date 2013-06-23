@@ -20,6 +20,11 @@ describe Client do
     it "can add a blank portfolio" do
       c = Client.new("Mr. Namely Name", 452562)
       p = Portfolio.new("Technology")
+      p.name.should == "Technology"
+      p.stocks.should == {}
+    end
+
+    it "can add a portfolio with stocks" do
     end
 
   end
@@ -44,10 +49,7 @@ describe Client do
 
   describe "#sell_stocks" do
 
-    it "deletes a stock from its portfolio when it is sold" do
-    end
-
-    it "adds cash to balance when a stock is sold" do
+    it "adds cash to balance when stock is sold" do
     end
 
   end
@@ -58,20 +60,35 @@ describe Portfolio do
 
   describe "#new" do
 
-    it "has a name and a hash of stocks" do
+    it "has a name, a hash of stocks, and a total value" do
     p.name.should == ("Technology")
     p.stocks.class.should == Hash
+    p.value.is_a?(Float).should == true
 
   end
 
   describe "#sell_stocks" do
-    it "deletes a stock when the stock is sold" do
+
+    it "deletes a stock from its portfolio when all shares are sold" do
     end
+
+    it "deducts shares from stock if stock is only partially sold" do
+    end
+
+    it "returns false if the client doesn't have enough shares to sell" do
+    end
+
+    it "returns false if the client doesn't own that stock at all"
+
   end
 
   describe "#buy_stocks" do
-    it "adds a stock when the stock is bought" do
+
+    it "adds the correct number of shares if client already owns stock" do
     end
+
+    it "adds the stock with correct number of shares if the stock is new"
+
   end
 
   describe "#calculate_value"
@@ -88,20 +105,24 @@ end
 describe Stock do
 
   describe "#new" do
+
     it "initializes with a name, number of shares, and current total price" do
       stock = Stock.new('AAPL', 50)
       stock.name.should == 'AAPL'
       stock.total_price.is_a?(Float).should == true
       stock.total_price.should > 0
     end
+
   end
 
   describe "#get_total_price" do
+
     it "retrieves its current price from Yahoo Finance" do
-    stock = Stock.new('AAPL', 50)
-    stock.total_price.is_a?(Float).should == true
-    stock.total_price.should > 0
+      stock = Stock.new('AAPL', 50)
+      stock.total_price.is_a?(Float).should == true
+      stock.total_price.should > 0
     end
+
   end
 
 end
