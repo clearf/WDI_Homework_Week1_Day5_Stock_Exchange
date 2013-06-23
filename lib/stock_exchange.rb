@@ -1,5 +1,10 @@
 require_relative 'client'
 
+# Created by: Teddy Cleveland
+# Last modified: 06/23/2013
+# Presentation of the stock-exchange simulation
+
+
 puts `clear`
 
 clients = {}
@@ -7,10 +12,12 @@ puts "welcome to the stock-exchange simulator\n\n"
 puts "clients can create accounts and see other clients: "
 puts
 
+# creation of new clients
 clients[:michael_white] = Client.new("michael white", 1000000)
 clients[:jerry_smith] = Client.new("jerry smith", 200000)
 clients[:linda_sparkles] = Client.new("linda sparkles", 90000)
 
+# listing all clients
 clients.each do |name, client|
 	puts "	" + client.name
 end
@@ -21,6 +28,7 @@ puts
 puts "clients can build multiple portfolios: "
 puts
 
+#creation of new portfolios
 clients[:michael_white].new_portfolio("tech_invest")
 clients[:michael_white].new_portfolio("business")
 clients[:jerry_smith].new_portfolio("clean_energy")
@@ -41,6 +49,7 @@ puts
 puts "clients can buy stocks at market price: "
 puts
 
+# buying of stocks
 clients[:michael_white].buy_stocks("tech_invest", "GOOG", 100)	
 clients[:michael_white].buy_stocks("tech_invest", "AAPL", 200)	
 clients[:michael_white].buy_stocks("tech_invest", "MSFT", 300)	
@@ -55,6 +64,7 @@ clients[:linda_sparkles].buy_stocks("beauty", "LRLCY", 20)
 
 sleep(3)
 
+# printing portfolio values
 puts
 puts "clients can view their portfolio's values"
 puts
@@ -69,6 +79,7 @@ puts
 puts "clients can sell stocks at market price: "
 puts
 
+#selling of stocks
 clients[:michael_white].sell_stocks("tech_invest", "AAPL", 140)	
 clients[:michael_white].sell_stocks("tech_invest", "MSFT", 280)	
 clients[:jerry_smith].sell_stocks("clean_energy", "VRNM", 100)
@@ -79,6 +90,7 @@ clients[:linda_sparkles].sell_stocks("beauty", "LRLCY", 20)
 
 sleep(3)
 
+# printing portfolio values
 puts
 puts "and then view the changes in their portfolio values"
 puts
