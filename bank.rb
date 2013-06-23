@@ -15,11 +15,15 @@ class Bank
     return client
   end
 
+  # List all the bank's clients
   def list_clients()
     puts "Client List: "
     @clients.each {|name, client| puts name}
   end
 
+  # For a given client, list all portfolios and their values.
+  # Display the total value of all of the client's portfolios
+  # and the cash balance left in his account.
   def show_client_report(client)
     current_client = @clients[client]
     total_portfolios_value = 0
@@ -27,8 +31,8 @@ class Bank
     current_client.portfolios.each {|name, portfolio| puts "Portfolio: " + name;
                                     current_portfolio_value = portfolio.get_portfolio_value;
                                     total_portfolios_value += current_portfolio_value;
-                                    puts "Value: " + current_portfolio_value.to_s}
+                                    puts "Value: $" + current_portfolio_value.to_s}
     puts "Total value of all portfolios: #{total_portfolios_value}"
-    puts "Balance: " + current_client.balance.to_s
+    puts "Balance: $" + current_client.balance.to_s
   end
 end
