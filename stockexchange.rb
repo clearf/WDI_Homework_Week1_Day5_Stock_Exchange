@@ -25,7 +25,7 @@ kevin.sell_stock("TSLA", 2000, "nyse")
 kevin.sell_stock("SBAC", 4000, "hkse")
 
 # List all client portfolios and their values (each portfolio value and sum of portfolio values) and the account balance.
-kevin.list_portfolio #missing the port values
+kevin.list_portfolio
 
 # List all stocks in a portfolio.
 kevin.list_stock("nyse")
