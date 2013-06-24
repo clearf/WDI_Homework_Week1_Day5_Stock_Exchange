@@ -2,18 +2,19 @@
 # code by Christine Coulter and Tom Brennan
 
 require 'pry'
-require 'yahoofinance'
 
 # Create Client class
 
 class Client
-  attr_accessor :name, :balance
-  def initialize(name, balance)
+  attr_accessor :name, :balance, :portfolio
+  def initialize(name, balance, portfolio)
     @name = name
     @balance = balance
+    @portfolio = []
   end
 
-YahooFinance::get_quotes
-  (YahooFinance::StandardQuote, 'AAPL')['AAPL'].lastTrade
+
+
+
 
 end
