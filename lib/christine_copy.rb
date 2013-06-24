@@ -249,18 +249,14 @@ class Stock
 
 ###returns value of shares of stock
   def get_value
-    price = 2
+    price = YahooFinance::get_quotes(YahooFinance::StandardQuote, ticker)[ticker].lastTrade
     return price * @shares
   end
 
-# def get_price(ticker)
-# YahooFinance::get_quotes(YahooFinance::StandardQuote,
-#  'ticker')['ticker'].lastTrade
-# end
 
   def to_s
     #TO DO: grab current price here
-    price = 2
+    price = YahooFinance::get_quotes(YahooFinance::StandardQuote, ticker)[ticker].lastTrade
     return "#{@ticker} is currently trading at #{price}."
   end
 end
