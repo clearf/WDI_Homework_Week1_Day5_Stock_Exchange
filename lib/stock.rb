@@ -3,12 +3,16 @@ require 'yahoofinance'
 class Stock
 
   attr_reader :name
-  attr_accessor :total_price, :num_of_shares
+  attr_accessor :share_price, :total_price, :num_of_shares
 
   def initialize(name, num_of_shares)
     @name = name
     @num_of_shares = num_of_shares
-    @total_price = ( YahooFinance::get_quotes(YahooFinance::StandardQuote, @name)[@name].lastTrade ) * num_of_shares
+
+    # Although individual share price is not necessary for this program to fulfill
+    # all of its functionality, it is useful for testing.
+    @share_price = YahooFinance::get_quotes(YahooFinance::StandardQuote, @name)[@name].lastTrade
+    @total_price = share_price * num_of_shares
   end
 
   # These methods seem to be unnecessary. Their functionality is fulfilled by the
@@ -35,8 +39,10 @@ class Stock
     return @total_price
   end
 
+  # A currently superfluous method that could potentially be used in future versions.
   def get_share_price
-    return YahooFinance::get_quotes(YahooFinance::StandardQuote, @name)[@name].lastTrade
+    @share_price = YahooFinance::get_quotes(YahooFinance::StandardQuote, @name)[@name].lastTrade
+    return @share_price
   end
 
 end

@@ -52,6 +52,7 @@ class Portfolio
     portfolio.each do |stock|
       @value += stock.get_total_price
     end
+    return @value
   end
 
 end

@@ -25,17 +25,32 @@ describe Client do
     end
 
     it "can add a portfolio with stocks" do
+      c = Client.new("Mr. Namely Name", 20000000)
+      tech_stocks = { 'ORCL' => Stock.new('ORCL', 100)
+                      'TTGT' => Stock.new('TTGT', 100)
+                      'DMRC' => Stock.new('DMRC', 100)}
+      p = Portfolio.new("Technology", tech_stocks)
+      p.name.should == "Technology"
+      p.stocks.size.should == 3
     end
+
 
   end
 
   describe "#delete_portfolio" do
 
    it "can delete a portfolio" do
-      c = Client.new("Mr. Namely Name", 452562)
-      p1 = Portfolio.new()
-      p2 = Portfolio.new()
-      c.delete_portfolio(portfolio_name) ## Must add actual name
+      c = Client.new("Mr. Namely Name", 20000000)
+      tech_stocks = { 'ORCL' => Stock.new('ORCL', 100)
+                      'TTGT' => Stock.new('TTGT', 100)
+                      'DMRC' => Stock.new('DMRC', 100) }
+      p1 = Portfolio.new("Technology", tech_stocks)
+      industrials_stocks = { 'ORCL' => Stock.new('EDMC', 100)
+                             'MEI' => Stock.new('TTGT', 100)
+                             'GE' => Stock.new('DMRC', 100) }
+      p2 = Portfolio.new("Industrials", industrials_stocks)
+      c.delete_portfolio("Industrials")
+      c.portfolios.size.should == 1
     end
 
   end
@@ -43,6 +58,9 @@ describe Client do
   describe "#buy_stocks" do
 
     it "cannot buy more stock than it can afford" do
+      c = Client.new("Mr. Namely Name", 0)
+      p = Portfolio.new("Technology")
+      (c.buy_stocks('AAPL', 100000, "Technology")).should == false
     end
 
   end
@@ -50,6 +68,13 @@ describe Client do
   describe "#sell_stocks" do
 
     it "adds cash to balance when stock is sold" do
+      c = Client.new("Mr. Namely Name", 0)
+      tech_stocks = { 'ORCL' => Stock.new('ORCL', 100)
+                      'TTGT' => Stock.new('TTGT', 100)
+                      'DMRC' => Stock.new('DMRC', 100) }
+      p = Portfolio.new("Technology", tech_stocks)
+      c.sell_stocks('ORCL', 100, "Technology")
+      c.balance.should > 0
     end
 
   end
@@ -70,32 +95,77 @@ describe Portfolio do
   describe "#sell_stocks" do
 
     it "deletes a stock from its portfolio when all shares are sold" do
+      tech_stocks = { 'ORCL' => Stock.new('ORCL', 100)
+                      'TTGT' => Stock.new('TTGT', 100)
+                      'DMRC' => Stock.new('DMRC', 100) }
+      p = Portfolio.new("Technology", tech_stocks)
+      p.sell_stocks('ORCL', 100)
+      p.stocks['ORCL'].should == nil
     end
 
     it "deducts shares from stock if stock is only partially sold" do
+      tech_stocks = { 'ORCL' => Stock.new('ORCL', 100)
+                      'TTGT' => Stock.new('TTGT', 100)
+                      'DMRC' => Stock.new('DMRC', 100) }
+      p = Portfolio.new("Technology", tech_stocks)
+      p.sell_stocks('ORCL', 50)
+      p.stocks['ORCL'].num_of_shares.should == 50
     end
 
     it "returns false if the client doesn't have enough shares to sell" do
+      tech_stocks = { 'ORCL' => Stock.new('ORCL', 100)
+                      'TTGT' => Stock.new('TTGT', 100)
+                      'DMRC' => Stock.new('DMRC', 100) }
+      p = Portfolio.new("Technology", tech_stocks)
+      (p.sell_stocks('ORCL', 150)).should == false
     end
 
-    it "returns false if the client doesn't own that stock at all"
+    it "returns false if the client doesn't own that stock at all" do
+      tech_stocks = { 'ORCL' => Stock.new('ORCL', 100)
+                      'TTGT' => Stock.new('TTGT', 100) }
+      p = Portfolio.new("Technology", tech_stocks)
+      (p.sell_stocks('DMRC', 150)).should == false
+    end
 
   end
 
   describe "#buy_stocks" do
 
     it "adds the correct number of shares if client already owns stock" do
+      tech_stocks = { 'ORCL' => Stock.new('ORCL', 100)
+                      'TTGT' => Stock.new('TTGT', 100)
+                      'DMRC' => Stock.new('DMRC', 100) }
+      p = Portfolio.new("Technology", tech_stocks)
+      p.buy_stocks('ORCL', 100)
+      p.stocks['ORCL'].num_of_shares.should == 200
     end
 
-    it "adds the stock with correct number of shares if the stock is new"
+    it "adds the stock with correct number of shares if the stock is new" do
+      tech_stocks = { 'TTGT' => Stock.new('TTGT', 100)
+                      'DMRC' => Stock.new('DMRC', 100) }
+      p = Portfolio.new("Technology", tech_stocks)
+      p.buy_stocks('ORCL', 100)
+      p.stocks['ORCL'].num_of_shares.should == 100
+    end
 
   end
 
   describe "#calculate_value"
 
     it "calculates its own value" do
-    # the Portfolio iterates through its set of stocks
-    # and adds each stock's current price
+      tech_stocks = { 'ORCL' => Stock.new('ORCL', 100)
+                      'TTGT' => Stock.new('TTGT', 100)
+                      'DMRC' => Stock.new('DMRC', 100) }
+      p = Portfolio.new("Technology", tech_stocks)
+      p.calculate_value.should > 0
+    end
+
+    it "returns 0 when there are no stocks" do
+      tech_stocks = { 'ORCL' => Stock.new('ORCL', 100)
+                      'TTGT' => Stock.new('TTGT', 100)
+                      'DMRC' => Stock.new('DMRC', 100) }
+      p = Portfolio.new("Technology", tech_stocks)
+      p.calculate_value.should == 0
     end
 
   end

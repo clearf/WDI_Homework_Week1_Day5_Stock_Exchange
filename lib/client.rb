@@ -28,13 +28,14 @@ class Client
     stock = Stock.new(stock_name, num_of_shares)
     if stock.total_price > balance
       puts "Transaction cannot be completed. The client does not have enough money."
+      return false
     else
       portfolios[portfolio_name].buy_stock(stock)
       @balance -= cost
     end
   end
 
-  def sell_stock(portfolio_name, stock_name, num_of_shares)
+  def sell_stock(stock_name, num_of_shares, portfolio_name)
     portfolio = portfolios[portfolio_name]
     if portfolio.sell_stock
       income = 0
