@@ -13,31 +13,23 @@ clients = []
 clients << client1 = Client.new("Barnie Maddoc", 2452496)
 clients << client2 = Client.new("Stevie Ray Vaughn", 233423)
 clients << client3 = Client.new("Sally Jones", 1232421)
-clients << client3 = Client.new("Peter Frampton", 3334553)
 
-# create portfolios
+# create portfolios of stocks
 
-p1 = Portfolio.new
-p2 = Portfolio.new
-p3 = Portfolio.new
+  tech_stocks = { 'ORCL' => Stock.new('ORCL', 100),
+                  'TTGT' => Stock.new('TTGT', 100),
+                  'DMRC' => Stock.new('DMRC', 100),}
+      p1 = Portfolio.new("tech", tech_stocks)
 
+  meds_stocks = { 'COO' => Stock.new('COO',   100),
+                  'MGLN' => Stock.new('MGLN', 100),
+                  'AMGN' => Stock.new('AMGN', 100) }
+      p2 = Portfolio.new("meds", meds_stocks)
 
-# give the clients stocks as well
-
-s1 = Stock.new("", 100)
-s2 = Stock.new("", 50)
-s3 = Stock.new("", 300)
-s4 = Stock.new("", 24)
-
-# put the stock in the stocks hash
-
-
-
-
-# put the stocks hash in the portfolio hash
-
-
-
+  bio_stocks = { 'ARNA' => Stock.new('ARNA', 100),
+                 'BIIB' => Stock.new('BIIB', 100),
+                 'BPAX' => Stock.new('BPAX', 100), }
+      p3 = Portfolio.new("bio", bio_stocks)
 
 # Assign portfolios hash to client
 
