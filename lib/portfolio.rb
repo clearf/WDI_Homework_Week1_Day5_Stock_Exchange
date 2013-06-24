@@ -56,6 +56,6 @@ class Portfolio
   end
 
   def to_s
-      return "the #{@portfolio_name} containing #{@stocks} is worth #{@value}."
+    return "The #{@portfolio_name} containing #{@stocks} is worth $#{@value}."
   end
 end
