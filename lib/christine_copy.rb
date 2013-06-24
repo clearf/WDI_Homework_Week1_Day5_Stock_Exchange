@@ -2,11 +2,7 @@
 require 'pry'
 require 'YahooFinance'
 
-<<<<<<< HEAD:lib/tom_copy.rb
-class FinancialInstitution
-=======
 class Broker
->>>>>>> 00350f2229de2e9f2dba1e8263d8f00b94608c3c:lib/christine_copy.rb
   attr_accessor :clients
   def initialize()
     @clients = []
@@ -241,14 +237,6 @@ end
 
 
 #####Hardcode examples#######
-<<<<<<< HEAD:lib/tom_copy.rb
-s1 = Stock.new("Cisco Systems", "CSCO", YahooFinance::get_quotes(YahooFinance::StandardQuote, 'CSCO')['CSCO'].lastTrade, "Technology", 100)
-s2 = Stock.new("IBM", "IBM", 1, "Technology", 500)
-s3 = Stock.new("Wendy's", "WEN", 1, "Food", 0)
-client1 = Client.new("Alphonse Von der Strudel", 100000)
-client1.portfolio << s1
-#client1.portfolio << s2
-=======
 s1 = Stock.new("CSCO", 100)
 s2 = Stock.new("IBM", 500)
 s3 = Stock.new("WEN", 0)
@@ -258,7 +246,6 @@ client1 = Client.new("Alphonse Von der Strudel", 1000)
 client1.portfolios << p1 << p2
 
 
->>>>>>> 00350f2229de2e9f2dba1e8263d8f00b94608c3c:lib/christine_copy.rb
 
 
 #portfolio is an array and items are instances of the stock class
@@ -267,8 +254,7 @@ client1.portfolios << p1 << p2
 puts "#{client1.name}'s balance = $#{client1.balance}"
 
 
-
-client1.buy_stock(s1, 200)
+# client1.buy_stock(s1, 200)
 # client1.buy_stock(s3, 100)
 # client1.sell_stock(s1, 100)
 # client1.sell_stock(s2, 400)
@@ -277,6 +263,4 @@ puts "----------------------------"
 
 puts "#{client1.name}'s balance = $#{client1.balance}"
 
-
-
-
+binding.pry
