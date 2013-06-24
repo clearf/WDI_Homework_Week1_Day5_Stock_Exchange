@@ -75,15 +75,6 @@ describe Bank, "#new_client" do
   end
 end
 
-=begin
-    describe Bank, "#new_client" do
-      it "adds a new client to the bank" do
-      ez_bank = Bank.new
-      ez_bank.new_client("Jeff Jones", 50)
-      ez_bank.clients.count.should eq(1)
-    end
-  end
-=end
 
 describe Bank, "#list_clients" do
   it "" do

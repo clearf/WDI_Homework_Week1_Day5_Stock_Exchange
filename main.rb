@@ -7,14 +7,6 @@ def number_to_currency(num)
   sprintf("%.2f", num).reverse.gsub(%r{([0-9]{3}(?=([0-9])))}, "\\1,").reverse
 end
 
-ez_bank = Bank.new
-jeff_jones = ez_bank.new_client("Jeff Jones", 50000000)
-jeff_high_risk = jeff_jones.new_portfolio("High Risk")
-jeff_jones.buy_stock("AAPL", 100, "High Risk")
-jeff_jones.sell_stock("AAPL", 100, "High Risk")
-puts jeff_jones.portfolios["High Risk"].stocks["AAPL"].num_shares
-
-
 #Create Bank
 ez_bank = Bank.new
 
