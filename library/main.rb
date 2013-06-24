@@ -24,9 +24,6 @@ s4 = Stock.new("nflx", 100)
 ben.portfolio[:portfolio1] = [s1, s2]
 ben.portfolio[:portfolio2] = [s3, s4]
 
-# puts ben.portfolio
-
-# total_value = 0
 portfolio1_value = 0
 portfolio2_value = 0
 
@@ -50,10 +47,6 @@ total_balance = (ben.balance - total_value.to_f)
 
 puts "Balance is $#{total_balance}."
 
-# ben.portfolio.each do |x|
-#   puts x.ticker
-# end
-
 puts
 puts "Portfolio 1 stocks are "
 
@@ -68,7 +61,18 @@ ben.portfolio[:portfolio2].each do |stock|
   puts stock.ticker
 end
 
-# puts ben.portfolio[:portfolio1][0].ticker
+puts
+puts "#{ben.name} sells all of his #{s4.ticker} stock."
+
+ben.portfolio[:portfolio2].pop
+
+portfolio2_value = portfolio2_value - s4.value
+total_value = portfolio1_value + portfolio2_value
+total_balance = (ben.balance - total_value.to_f)
+
+puts "Portfolio 2 value is now $ #{portfolio2_value}"
+puts "The total value is now $#{total_value}"
+puts "Balance is now $#{total_balance}."
 
 puts
 puts "Clients are "
@@ -76,16 +80,3 @@ puts "Clients are "
 clients.each do |client|
   puts client.name
 end
-
-
-
-# ben.portfolio
-
-# ben.portfolio[:stock1] = Stock.new("AAPL",10)
-# ben.portfolio[:stock2] = Stock.new("JMBA",10)
-
-# puts ben.portfolio[:stock1].value
-
-
-# puts ben.portfolio[:stock1].price
-# puts ben.portfolio[:stock2].price
