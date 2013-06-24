@@ -15,8 +15,6 @@ jeff_jones.sell_stock("AAPL", 100, "High Risk")
 puts jeff_jones.portfolios["High Risk"].stocks["AAPL"].num_shares
 
 
-
-=begin
 #Create Bank
 ez_bank = Bank.new
 
@@ -74,7 +72,7 @@ puts ""
 ez_bank.show_client_report(mary_deluca)
 ez_bank.show_client_report(kira_macdonald)
 ez_bank.show_client_report(jeff_jones)
-<<<<<<< HEAD
+
 puts "Detailed view of stocks in Jeff's Portfolios:"
 jeff_high_risk.list_stocks
 jeff_medium_risk.list_stocks
@@ -85,11 +83,6 @@ jeff_medium_risk.list_stocks
 
 
 
-
-
-=======
-=end
->>>>>>> a9fb2da72f3fa12e0ec58ce91bd9873b20cad3ca
 
 
 
