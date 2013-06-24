@@ -52,8 +52,36 @@ describe Client, "#buy_stock" do
     jeff_jones = ez_bank.new_client("Jeff Jones", 5000000000)
     jeff_high_risk = jeff_jones.new_portfolio("High Risk")
     jeff_jones.buy_stock("AAPL", 100, "High Risk")
-    "s".should eq("s")
     jeff_jones.portfolios["High Risk"].stocks["AAPL"].num_shares.should eq(100)
+  end
+end
+
+describe Client, "#new_portfolio" do
+  it "adds a new portfolio to the list when one is created" do
+    ez_bank = Bank.new
+    jeff_jones = ez_bank.new_client("Jeff Jones", 5000000000)
+    jeff_high_risk = jeff_jones.new_portfolio("High Risk")
+    new_port = jeff_jones.portfolios["High Risk"]
+    new_port.name.should eq("High Risk")
+  end
+end
+
+describe Bank, "#new_client" do
+  it "adds a new client to the list when one is created" do
+    ez_bank = Bank.new
+    jeff_jones = ez_bank.new_client("Jeff Jones", 5000000000)
+    check_client = ez_bank.clients["Jeff Jones"]
+    check_client.name.should eq("Jeff Jones")
+  end
+end
+
+describe Bank, "#list_clients" do
+  it "" do
+    ez_bank = Bank.new
+    jeff_jones = ez_bank.new_client("Jeff Jones", 5000000000)
+    jeff_high_risk = jeff_jones.new_portfolio("High Risk")
+    new_port = jeff_jones.portfolios["High Risk"]
+    new_port.name.should eq("High Risk")
   end
 end
 
