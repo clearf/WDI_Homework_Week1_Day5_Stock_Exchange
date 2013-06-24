@@ -7,3 +7,5 @@ source 'http://rubygems.org'
 # gem 'gemname'
 gem 'yahoofinance'
 gem 'rspec'
+
+
