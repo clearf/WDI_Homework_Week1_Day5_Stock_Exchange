@@ -1,3 +1,4 @@
+require 'pry'
 require_relative 'stock.rb'
 
 class Portfolio
@@ -36,7 +37,7 @@ class Portfolio
       running_bal += Stock.get_price(x.to_s) * y
     end
     @portfolio_bal = running_bal
-    puts "Current balance of #{@port_name} is #{@portfolio_bal}."
+    puts "Current value of #{@port_name} is #{@portfolio_bal}."
   end
 end
 
