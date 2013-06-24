@@ -2,22 +2,25 @@ class Client
 
   attr_accessor :name, :balance, :portfolios, :portfolios_total_value
 
-  def initialize(name, balance, portfolios = {})
+  def initialize(name, balance)
     @name = name
     @balance = balance
-    @portfolios = portfolios
-    @portfolios_total_value = update_total_portfolios_value
+    @portfolios = {}
+    @portfolios_total_value = 0
   end
 
   def update_total_portfolios_value
-    total_value = 0
-    portfolios.each do |portfolio|
-      total_value += portfolio.calculate_value
+    @portfolios_total_value = 0
+    if portfolios.any?
+      portfolios.each do |name, portfolio|
+        @portfolios_total_value += portfolio.calculate_value
+      end
     end
+    return @portfolios_total_value
   end
 
   def add_portfolio(portfolio)
-    portfolios << portfolio
+    portfolios[portfolio.name] = portfolio
   end
 
   def delete_portfolio(portfolio_name)
@@ -35,13 +38,10 @@ class Client
     end
   end
 
-  def sell_stock(stock_name, num_of_shares, portfolio_name)
+  def sell_stock(stock_name, num_of_shares_to_sell, portfolio_name)
     portfolio = portfolios[portfolio_name]
-    if portfolio.sell_stock
-      income = 0
-      stocks.each do |stock|
-        income += stock.get_price * num_of_shares
-      end
+    income = portfolio.sell_stock(stock_name, num_of_shares_to_sell)
+    unless income == false
       @balance += income
     else
       puts "The transaction was not completed."
@@ -49,7 +49,7 @@ class Client
   end
 
   def to_s
-    return "The client, #{@name} has a total cash balance of #{@balance} dollars, has #{@portoflios.length} worth #{@portfolios_total_value}."
+    return "The client, #{@name} has a total cash balance of #{@balance} dollars, and has #{@portfolios.length} portfolio worth $#{update_total_portfolios_value}."
   end
 
 end
