@@ -9,37 +9,72 @@ end
 
 #Create Bank
 ez_bank = Bank.new
-puts "\nThe bank has no clients, show client list:\n"
-ez_bank.list_clients()
 
 #Create Clients
-jeff_jones = ez_bank.new_client("Jeff Jones", 50000000)
 mary_deluca = ez_bank.new_client("Mary DeLuca", 20)
 kira_macdonald = ez_bank.new_client("Kira MacDonald", 100000)
-puts "\nThe bank now has clients, show client list:\n"
-ez_bank.list_clients()
-puts ""
-ez_bank.show_client_report(jeff_jones)
-ez_bank.show_client_report(mary_deluca)
-ez_bank.show_client_report(kira_macdonald)
+
 
 #Create Portfolios
-jeff_high_risk = jeff_jones.new_portfolio("High Risk")
-mary_low_risk = mary_deluca.new_portfolio("Low Risk")
 mary_high_risk = mary_deluca.new_portfolio("High Risk")
-jeff_medium_risk = jeff_jones.new_portfolio("Medium Risk")
+mary_low_risk = mary_deluca.new_portfolio("Low Risk")
 kira_medium_risk = kira_macdonald.new_portfolio("Medium Risk")
 
-# Buy and sell some stocks
-puts "Current value of Jeff's stocks: $" + Bank.number_to_currency(jeff_jones.value_of_all_stocks)
+puts "Welcome to EZ bank. Here is our current client list:"
+ez_bank.list_clients()
+puts ""
+puts "My name is Jeff Jones. I would like to become a client."
+puts "Here is 50000000."
+puts ""
+jeff_jones = ez_bank.new_client("Jeff Jones", 50000000)
+jeff_high_risk = jeff_jones.new_portfolio("High Risk")
+jeff_medium_risk = jeff_jones.new_portfolio("Medium Risk")
+jeff_low_risk = jeff_jones.new_portfolio("Low Risk")
+puts "Great. We have created an account. Here is your account summary."
+ez_bank.show_client_report(jeff_jones)
+puts ""
+puts "Thanks. Please purchase 100 shares of Apple and put them in my High Risk Portfolio."
 jeff_jones.buy_stock("AAPL", 100, "High Risk")
-puts "\nCurrent value of Jeff's stocks: $" + Bank.number_to_currency(jeff_jones.value_of_all_stocks)
-puts "\nClient Reports: "
+puts ""
+puts "Transaction completed."
+puts ""
+jeff_high_risk.list_stocks
+puts ""
+puts "News Update: Apple's new iPhone does not have wifi, but"
+puts "it doubles as a toaster."
+puts ""
+puts "That is awful news. Please sell 50 shares of Apple."
+jeff_jones.sell_stock("AAPL", 50, "High Risk")
+puts "What is the status of my account?"
+puts ""
 ez_bank.show_client_report(jeff_jones)
-jeff_jones.sell_stock("AAPL", 100, "High Risk")
-puts "\nCurrent value of Jeff's stocks: $" + Bank.number_to_currency(jeff_jones.value_of_all_stocks)
-puts "\nClient Reports: "
+puts ""
+puts "Phew, thank god I am still rich!"
+puts "Please purchase 10,000,000 shares of MNKD."
+puts ""
+jeff_jones.buy_stock("MNKD", 10000000, "Medium Risk")
+puts ""
+puts "Grrr, everyone has limits I guess."
+puts "Please buy 100 shares of MNKD and put in my Medium Risk"
+jeff_jones.buy_stock("MNKD", 100, "Medium Risk")
+puts ""
+puts "Summary of EZ Bank"
+ez_bank.list_clients()
+puts ""
+ez_bank.show_client_report(mary_deluca)
+ez_bank.show_client_report(kira_macdonald)
 ez_bank.show_client_report(jeff_jones)
+puts "Detailed view of stocks in Jeff's Portfolios:"
+jeff_high_risk.list_stocks
+jeff_medium_risk.list_stocks
+
+
+
+
+
+
+
+
 
 
 

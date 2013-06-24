@@ -45,7 +45,7 @@ class Client
 
       @balance -= cost
     else
-      puts "Client cannot afford to buy #{num_shares} shares of" +
+      puts "Client cannot afford to buy #{num_shares} shares of " +
            "#{ticker} stock at #{price} dollars per share."
     end
   end
@@ -67,5 +67,4 @@ class Client
             stock_value += stock.get_price * stock.num_shares}}
     return stock_value
   end
-
 end
