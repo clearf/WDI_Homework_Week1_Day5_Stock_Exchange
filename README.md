@@ -1,39 +1,9 @@
-WDI_Homework Templates
-=================
+Hello!
 
-#### How To Use Git For Your Homework
-[![How to fork this
-repo](https://github-images.s3.amazonaws.com/help/Bootcamp-Fork.png)](../../fork)
+Welcome to our Stock Exchange Program!
 
-To get started, [fork this repo](../../fork) to the github account of ONE of your group
-memebers to create a new repository for your group (We'll call this person the
-*repository owner*). 
+The main.rb file is already set with a specific client, Ben. You can look at his stock decisions and judge whether he made wise choices.
 
+The user_input.rb file takes user input to create a new client, new portfolios, and new stock purchases, but it loses some functionality from the main.rb file.
 
-The repository owner should then [add the other group members as
-github collaborators](https://help.github.com/articles/how-do-i-add-a-collaborator). 
-
-Each person in the group should clone the repo to their local machine
-
-```
-# Get the URL from the repository owner's repo as usual. It will be of the form
-git clone git@github.com:<username>/<assignment>.git 
-# Clones your fork of the repository into the current directory in terminal
-```
-
-```
-# pull, work, commit, and push to the repository as per the normal github
-# workflow
-git add .
-git commit -m "Description of change made"
-git push origin master
-```
-
-#### Submitting
-* To submit the homework, make your final commits, then have the repository
-"owner" issue a [Pull
-Request](https://help.github.com/articles/using-pull-requests) within github.
-This will send us your code. Include a reasonable comment describing what you're
-doing. 
-
-
+The testing element was, upon Phil's suggestion, largely ignored.
