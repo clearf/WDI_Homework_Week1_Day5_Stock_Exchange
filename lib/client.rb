@@ -2,6 +2,7 @@
 require_relative 'portfolio'
 
 class Client
+
 	attr_accessor :name, :balance, :portfolios
 	def initialize(name, balance)
 		@name = name
@@ -12,31 +13,33 @@ class Client
 	############################################################
       ####################interfacing functions######################### 
       ############################################################
+
+
       #(function called from Stock-Exchange.rb)
-	def buy_stocks(portfolio_name, tick_string, num_stocks)
-		portfolio_sym = portfolio_name.to_sym
-		return false unless enough_money?(tick_string, num_stocks) && portfolio_exists?(portfolio_sym)
-		@portfolios[portfolio_sym].add_stock(tick_string, num_stocks)
+	def buy_stocks(port_name, tick_string, num_stocks)
+		port_sym = port_name.to_sym
+		return false unless enough_money?(tick_string, num_stocks) && portfolio_exists?(port_sym)
+		@portfolios[port_sym].add_stock(tick_string, num_stocks)
 		spend_money(num_stocks * get_ticker(tick_string))
 		puts "	#{@name} just bought #{num_stocks} shares in #{tick_string}"
 	end
 
-	def sell_stocks(portfolio_name, tick_string, num_stocks)
-		portfolio_sym = portfolio_name.to_sym
+	def sell_stocks(port_name, tick_string, num_stocks)
+		port_sym = port_name.to_sym
 		tick_sym = tick_string.to_sym
-		return false unless portfolio_exists?(portfolio_sym) && enough_stocks?(portfolio_sym, tick_sym, num_stocks)
-		@portfolios[portfolio_sym].remove_stock(tick_sym, num_stocks)
+		return false unless portfolio_exists?(port_sym) && enough_stocks?(port_sym, tick_sym, num_stocks)
+		@portfolios[port_sym].remove_stock(tick_sym, num_stocks)
 		@balance += num_stocks * get_ticker(tick_string) 
 		puts "	#{@name} just sold #{num_stocks} of his/her shares in #{tick_string}"
 	end
 
 	#creates a new portfolio
-	def new_portfolio(portfolio_name)
-		return false if portfolio_name.class != String #returns false if 
-		portfolio_sym = portfolio_name.to_sym
-		return false if portfolio_exists?(portfolio_sym) #return false if portfolio exists alread
-		@portfolios[portfolio_sym] = Portfolio.new #otherwise creates new portfolio
-		return true
+	def new_portfolio(port_name)
+		return false if port_name.class != String #returns false if 
+		port_sym = port_name.to_sym
+		return false if portfolio_exists?(port_sym) #return false if portfolio exists alread
+		@portfolios[port_sym] = Portfolio.new #otherwise creates new portfolio
+		true
 	end
 
 	#lists all of the current portfolios, if any
@@ -56,7 +59,7 @@ class Client
 				end
 			end
 		end
-		return true
+		true
 	end
 
 
@@ -65,13 +68,13 @@ class Client
       #########################################################
 
 	def get_ticker (ticker_string)
-		return YahooFinance::get_quotes(YahooFinance::StandardQuote, ticker_string)[ticker_string].lastTrade
+		YahooFinance::get_quotes(YahooFinance::StandardQuote, ticker_string)[ticker_string].lastTrade
 	end
 
 		#returns false if a portfolio doesn't exist
-	def portfolio_exists?(portfolio_sym)
-		return false if @portfolios[portfolio_sym] == nil
-		return true
+	def portfolio_exists?(port_sym)
+		return false if @portfolios[port_sym] == nil
+		true
 	end
 
 	#returns false if cliend does not have  enough money for specified stocks
@@ -80,20 +83,20 @@ class Client
 			puts "You don't have enough money to do that, that costs #{num_stocks_desired * get_ticker(ticker_string)}, and you have #{balance}"
 			return false
 		end
-		return true
+		true
 	end
 
-	def enough_stocks?(portfolio_sym, tick_sym, num_stocks_to_sell)
-		return false unless  @portfolios[portfolio_sym].has_stocks_in?(tick_sym) &&\
-			@portfolios[portfolio_sym].stocks[tick_sym].shares >= num_stocks_to_sell
-		return true
+	def enough_stocks?(port_sym, tick_sym, num_stocks_to_sell)
+		return false unless  @portfolios[port_sym].has_stocks_in?(tick_sym) &&\
+			@portfolios[port_sym].stocks[tick_sym].shares >= num_stocks_to_sell
+		true
 	end	
 
 	#adds positive float values of money to account
 	def add_money(amount)
 		return false if amount < 0
 		@balance += amount
-		return true
+		true
 	end
 
 	#spends amount of specified money if client has enough

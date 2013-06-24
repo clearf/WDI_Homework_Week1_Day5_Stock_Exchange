@@ -34,13 +34,13 @@ attr_accessor :stocks
 			return true
 		else
 			@stocks[tick_sym].shares -= number
-			return true
+			true
 		end
 	end
 
 	def has_stocks_in?(tick_sym)
 		return false if stocks[tick_sym] == nil
-		return true
+		true
 	end
 
 end

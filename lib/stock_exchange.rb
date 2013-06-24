@@ -102,12 +102,3 @@ end
 puts
 puts "thanks for checking out the stock-exchange simulator"
 puts
-
-
-
-
-
-
-
-
-
