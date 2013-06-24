@@ -24,16 +24,19 @@ class Client
   end
 
   def delete_portfolio(portfolio_name)
+    income = portfolios[portfolio_name].calculate_value
+    @balance += income
     portfolios.delete(portfolio_name)
   end
 
-  def buy_stock(stock_name, num_of_shares, portfolio_name)
-    stock = Stock.new(stock_name, num_of_shares)
+  def buy_stock(stock_name, num_of_shares_to_buy, portfolio_name)
+    stock = Stock.new(stock_name, num_of_shares_to_buy)
     if stock.total_price > balance
       puts "Transaction cannot be completed. The client does not have enough money."
       return false
     else
-      portfolios[portfolio_name].buy_stock(stock)
+      cost = stock.total_price
+      portfolios[portfolio_name].buy_stock(stock_name, num_of_shares_to_buy)
       @balance -= cost
     end
   end
@@ -49,7 +52,7 @@ class Client
   end
 
   def to_s
-    return "The client, #{@name} has a total cash balance of #{@balance} dollars, and has #{@portfolios.length} portfolio worth $#{update_total_portfolios_value}."
+    return "The client, #{@name}, has a total cash balance of $#{@balance}, and has #{@portfolios.length} portfolio(s) worth $#{update_total_portfolios_value}."
   end
 
 end

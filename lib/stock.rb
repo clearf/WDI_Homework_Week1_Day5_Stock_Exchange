@@ -39,7 +39,6 @@ class Stock
     return @total_price
   end
 
-  # A currently superfluous method that could potentially be used in future versions.
   def get_share_price
     @share_price = YahooFinance::get_quotes(YahooFinance::StandardQuote, @name)[@name].lastTrade
     return @share_price
