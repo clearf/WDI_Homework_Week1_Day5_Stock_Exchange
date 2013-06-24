@@ -1,5 +1,7 @@
 # Code by Christine Coulter and Tom Brennan
 require 'pry'
+require 'YahooFinance'
+
 class Broker
   attr_accessor :clients
   def initialize()
@@ -7,15 +9,46 @@ class Broker
   end
 
   def client_list
+    @clients.each do |item|
+      puts "List of clients:"
+      puts "----------------------------------------------"
+      puts item.name
+    end
   end
 
-  def client_portfolios_list
+  def client_portfolios_list(client_name)
+    @clients.each do |client|
+      if client.name == client_name
+        client_value = 0
+        puts "List of client portfolio for #{client.name}"
+        puts "----------------------------------------------"
+        puts "Account balance: #{client.balance}"
+        client.portfolios.each do |portfolio|
+          portfolio_value = portfolio.get_value
+          puts "Portfolio: #{portfolio.name}, valued at $#{portfolio_value}"
+          client_value += portfolio_value
+        end
+        puts "Total portfolio value: $#{client_value}"
+      end
+    end
   end
 
-  def client_portfolios_stocks_list
+  def client_portfolios_stocks_list(client_name, portfolio_name)
+    @clients.each do |client|
+      if client.name == client_name
+        client.portfolio.each do |portfolio|
+          if portfolio.name == portfolio_name
+            puts "List of stocks in portfolio: #{portfolio_name}"
+            puts "----------------------------------------------"
+            portfolio.stocks.each do |stock|
+              puts stock
+            end
+          end
+        end
+      end
+    end
   end
 end
-
 
 class Client
   attr_accessor :name, :balance, :portfolios
@@ -84,37 +117,24 @@ class Client
       puts "You do not have enough money ($#{@balance} vs $#{total_value}) to buy #{number_of_shares_to_buy} shares."
     end
   end
-#updates client's balance after buying stock and updates portfolio
-#adds stock to portfolio if stock does not already exist in portfolio
-#won't let client buy shares if balance is not high enough
-  # def buy_stock(stock, number_of_shares_to_buy)
-  #   total_value = number_of_shares_to_buy * stock.price
-  #   if @balance >= total_value
-  #     stock.shares += number_of_shares_to_buy
-  #     @balance -= total_value
-  #     unless @portfolio.include?(stock)
-  #     @portfolio << stock
-  #     end
-  #   else
-  #     puts "You do not have enough money to buy that many shares."
-  #   end
-  # end
 
-#updates client's balance after selling stock and updates portfolio
-#deletes stock from portfolio if client sold all of the shares
-#won't let the client sell shares if the client doesn't have enough shares to sell
-  # def sell_stock(stock, number_of_shares_to_sell)
-  #   if stock.shares >= number_of_shares_to_sell
-  #     stock.shares -= number_of_shares_to_sell
-  #     total_value = number_of_shares_to_sell * stock.price
-  #     @balance += total_value
-  #     if stock.shares == 0
-  #       @portfolio.delete(stock)
-  #     end
-  #   else
-  #     puts "You do not own enough shares to sell that number."
-  #   end
-  # end
+
+  def sell_stock(portfolio_name, stock, number_of_shares_to_sell)
+    if has_portfolio(portfolio_name)
+      @portfolios.each do |item|
+        if item.name == portfolio_name
+          if item.get_shares_of_stock(stock) >= number_of_shares_to_sell
+            item.remove_stock(stock, number_of_shares_to_sell)
+          else
+            puts "You do not have enough shares of #{stock} to sell #{number_of_shares_to_sell}."
+          end
+        end
+      end
+    else
+      puts "You currently do not have that portfolio. You need to create it first."
+    end
+  end
+
 
   def to_s
     return "#{@name} has a balance of #{@balance}."
@@ -132,7 +152,7 @@ class Portfolio
   def has_stock(stock)
     found_stock = false
     @stocks.each do |item|
-      if item.name == stock
+      if item.ticker == stock
         found_stock = true
       end
     end
@@ -142,30 +162,64 @@ class Portfolio
 
   def add_stock(stock, number_of_shares)
     if has_stock(stock)
-      stock.shares += number_of_shares
+      @stocks.each do |item|
+        if item.ticker == stock
+          stock.shares += number_of_shares
+        end
+      end
     else
       @stocks << Stock.new(stock, number_of_shares)
     end
   end
 
+  def remove_stock(stock, number_of_shares)
+    @stocks.each do |item|
+      if item.ticker == stock
+        stock.shares -= number_of_shares
+      end
+    end
+  end
 
 
+  def get_shares_of_stock(stock)
+    number_of_shares = 0
+    @stocks.each do |item|
+      if item.ticker == stock
+        number_of_shares = item.shares
+      end
+    end
+    number_of_shares
+  end
 
+  def get_value
+    portfolio_value = 0
+    @stocks.each do |stock|
+      portfolio_value += stock.get_value
+    end
+    portfolio_value
+  end
 
-
+  def to_s
+    @stocks.each do |item|
+      puts item
+    end
+  end
 
 end
 
 
 class Stock
-  attr_accessor :stock_name, :ticker, :price, :shares
-  def initialize(stock_name, ticker, price, shares)
+  attr_accessor :ticker, :shares
+  def initialize(ticker, shares)
     # Just 1 @ makes these instance variables,
     # If we had 2 @@ they would be class variables
-    @stock_name = stock_name
     @ticker = ticker
-    @price = price
     @shares = shares
+  end
+
+  def get_value
+    price = 2
+    return price * @shares
   end
 
 # def get_price(ticker)
@@ -174,16 +228,18 @@ class Stock
 # end
 
   def to_s
-    return "The ticker symbol for #{@stock_name} is :#{@ticker}, \nwhich is currently trading at #{@price}. #{@shares}"
+    #TO DO: grab current price here
+    price = 2
+    return "#{@ticker} is currently trading at #{price}."
   end
 end
 
 
 
 #####Hardcode examples#######
-s1 = Stock.new("Cisco Systems", "CSCO", 2, 100)
-s2 = Stock.new("IBM", "IBM", 1, 500)
-s3 = Stock.new("Wendy's", "WEN", 1, 0)
+s1 = Stock.new("CSCO", 100)
+s2 = Stock.new("IBM", 500)
+s3 = Stock.new("WEN", 0)
 p1 = Portfolio.new("Tech")
 p2 = Portfolio.new("Food")
 client1 = Client.new("Alphonse Von der Strudel", 1000)
