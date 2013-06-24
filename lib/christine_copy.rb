@@ -8,6 +8,7 @@ class Broker
     @clients = []
   end
 
+###puts name of each instance of client
   def client_list
     @clients.each do |item|
       puts "List of clients:"
@@ -16,6 +17,10 @@ class Broker
     end
   end
 
+###searches through array of instances of client for the one with the client name
+###puts account balance of client
+###iterates through client's portfolios and calls get_value function in portfolio class
+###calculates value of all portfolios as 'client_value'
   def client_portfolios_list(client_name)
     @clients.each do |client|
       if client.name == client_name
@@ -33,6 +38,10 @@ class Broker
     end
   end
 
+
+###searches through array of instances of client class
+###finds the client object and searches through arrays of portfolio instances
+###puts stocks in portfolio
   def client_portfolios_stocks_list(client_name, portfolio_name)
     @clients.each do |client|
       if client.name == client_name
@@ -78,10 +87,12 @@ class Client
     @balance -= withdraw_amount
   end
 
+
+###creates new portfolio if it doesn't already exist and pushes it to array of portfolios
   def create_portfolio()
     puts "Portfolio name?"
     desired_name = gets.chomp
-
+    ###calls has_portfolio function
     if has_portfolio(desired_name)
       puts "You already have a portfolio with the name #{desired_name}"
     else
@@ -89,6 +100,7 @@ class Client
     end
   end
 
+###searches through array of instances of portfolio to see if a particular instance exists and returns boolean
   def has_portfolio(desired_name)
     found_portfolio = false
     @portfolios.each do |item|
@@ -99,12 +111,15 @@ class Client
     found_portfolio
   end
 
-
+###checks if client has enough money in balance to buy shares of a stock
   def buy_stock(portfolio_name, stock, number_of_shares_to_buy)
     total_value = number_of_shares_to_buy * stock.price
     if @balance >= total_value
+      ###calls has_portfolio function
       if has_portfolio(portfolio_name)
         @portfolios.each do |item|
+          ###calls add_stock function in portfolio class
+          ###updates balance
           if item.name == portfolio_name
             item.add_stock(stock, number_of_shares_to_buy)
             @balance -= total_value
@@ -118,13 +133,18 @@ class Client
     end
   end
 
-
+###checks if client has enough shares to sell
   def sell_stock(portfolio_name, stock, number_of_shares_to_sell)
+    total_value = number_of_shares_to_sell * stock.price
+    ###calls has_portfolio function
     if has_portfolio(portfolio_name)
       @portfolios.each do |item|
         if item.name == portfolio_name
+          ###calls get_shares_of_stock function in portfolio class
+          ###updates balance
           if item.get_shares_of_stock(stock) >= number_of_shares_to_sell
             item.remove_stock(stock, number_of_shares_to_sell)
+            @balance += total_value
           else
             puts "You do not have enough shares of #{stock} to sell #{number_of_shares_to_sell}."
           end
@@ -149,6 +169,8 @@ class Portfolio
     @stocks = []
   end
 
+
+###searches through stocks array of stock instances and returns boolean
   def has_stock(stock)
     found_stock = false
     @stocks.each do |item|
@@ -159,7 +181,9 @@ class Portfolio
     found_stock
   end
 
-
+###searches through stocks array of stock instances
+###updates number of shares of particular stock (add)
+###pushes stock into stocks array if new
   def add_stock(stock, number_of_shares)
     if has_stock(stock)
       @stocks.each do |item|
@@ -172,6 +196,9 @@ class Portfolio
     end
   end
 
+
+###searches through stocks array of stock instances
+###updates number of shares of particular stock (subtract)
   def remove_stock(stock, number_of_shares)
     @stocks.each do |item|
       if item.ticker == stock
@@ -180,7 +207,7 @@ class Portfolio
     end
   end
 
-
+###returns number of shares of stock
   def get_shares_of_stock(stock)
     number_of_shares = 0
     @stocks.each do |item|
@@ -191,6 +218,8 @@ class Portfolio
     number_of_shares
   end
 
+###returns value of portfolio instance by summing values of shares of stock
+###calls get_value function in stock class
   def get_value
     portfolio_value = 0
     @stocks.each do |stock|
@@ -217,6 +246,8 @@ class Stock
     @shares = shares
   end
 
+
+###returns value of shares of stock
   def get_value
     price = 2
     return price * @shares
@@ -248,7 +279,6 @@ client1.portfolios << p1 << p2
 
 
 
-#portfolio is an array and items are instances of the stock class
 #####Gives readout#####
 
 puts "#{client1.name}'s balance = $#{client1.balance}"
