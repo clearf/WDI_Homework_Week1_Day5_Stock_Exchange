@@ -75,6 +75,16 @@ describe Bank, "#new_client" do
   end
 end
 
+=begin
+    describe Bank, "#new_client" do
+      it "adds a new client to the bank" do
+      ez_bank = Bank.new
+      ez_bank.new_client("Jeff Jones", 50)
+      ez_bank.clients.count.should eq(1)
+    end
+  end
+=end
+
 describe Bank, "#list_clients" do
   it "" do
     ez_bank = Bank.new
@@ -82,6 +92,16 @@ describe Bank, "#list_clients" do
     jeff_high_risk = jeff_jones.new_portfolio("High Risk")
     new_port = jeff_jones.portfolios["High Risk"]
     new_port.name.should eq("High Risk")
+  end
+
+  describe Portfolio, "#get_portfolio_value" do
+      it "calculates the value of the portfolio" do
+      ez_bank = Bank.new
+      jeff_jones = ez_bank.new_client("Jeff Jones", 5000000000)
+      jeff_high_risk = jeff_jones.new_portfolio("High Risk")
+      jeff_jones.buy_stock("AAPL", 100, "High Risk")
+      jeff_high_risk.get_portfolio_value.should eq(41350)
+    end
   end
 end
 
