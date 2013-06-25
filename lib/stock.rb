@@ -1,5 +1,13 @@
 require 'yahoofinance'
 
+	def get_price(ticker)
+		YahooFinance::get_quotes(YahooFinance::StandardQuote, ticker)[ticker].lastTrade
+	end
+
+	def get_market_value(ticker, shares)
+		shares * get_price(ticker)
+	end
+
 class Stock
 	attr_reader :ticker_string, :shares
 
@@ -16,9 +24,7 @@ class Stock
 		@shares -= num_shares
 	end
 
-	def get_price
-		@shares * YahooFinance::get_quotes(YahooFinance::StandardQuote, @ticker_string)[@ticker_string].lastTrade
-	end
+
 end
 
 

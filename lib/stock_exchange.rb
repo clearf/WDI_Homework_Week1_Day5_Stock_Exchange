@@ -22,7 +22,7 @@ clients.each do |name, client|
 	puts "	" + client.name
 end
 
-sleep(3)
+
 
 puts
 puts "clients can build multiple portfolios: "
@@ -43,7 +43,7 @@ clients.each do |name, client|
 	puts
 end
 
-sleep(3)
+
 
 puts 
 puts "clients can buy stocks at market price: "
@@ -62,7 +62,7 @@ clients[:jerry_smith].buy_stocks("computing_tech", "IBM", 200)
 clients[:linda_sparkles].buy_stocks("beauty","PG", 100)
 clients[:linda_sparkles].buy_stocks("beauty", "LRLCY", 20)
 
-sleep(3)
+
 
 # printing portfolio values
 puts
@@ -73,7 +73,7 @@ clients.each do |name, client|
 	client.list_all_portfolios
 end
 
-sleep(3)
+
 
 puts
 puts "clients can sell stocks at market price: "
@@ -88,7 +88,7 @@ clients[:jerry_smith].sell_stocks("home_grown", "WMT", 10)
 clients[:jerry_smith].sell_stocks("computing_tech", "IBM", 20)
 clients[:linda_sparkles].sell_stocks("beauty", "LRLCY", 20)
 
-sleep(3)
+
 
 # printing portfolio values
 puts

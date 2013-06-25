@@ -20,7 +20,7 @@ class Client
 		port_sym = port_name.to_sym
 		return false unless enough_money?(tick_string, num_stocks) && portfolio_exists?(port_sym)
 		@portfolios[port_sym].add_stock(tick_string, num_stocks)
-		spend_money(num_stocks * get_ticker(tick_string))
+		spend_money(get_market_value(tick_string, num_stocks))
 		puts "	#{@name} just bought #{num_stocks} shares in #{tick_string}"
 	end
 
@@ -29,7 +29,7 @@ class Client
 		tick_sym = tick_string.to_sym
 		return false unless portfolio_exists?(port_sym) && enough_stocks?(port_sym, tick_sym, num_stocks)
 		@portfolios[port_sym].remove_stock(tick_sym, num_stocks)
-		@balance += num_stocks * get_ticker(tick_string) 
+		@balance += num_stocks * get_price(tick_string) 
 		puts "	#{@name} just sold #{num_stocks} of his/her shares in #{tick_string}"
 	end
 
@@ -55,7 +55,7 @@ class Client
 			else
 				puts ": value: $#{portfolio.portfolio_value}"
 				portfolio.stocks.each do |ticker_sym, stock|
-			    		puts "    		#{ticker_sym.to_s}: #{stock.shares} shares: $#{stock.get_price}"
+			    		puts "    		#{ticker_sym.to_s}: #{stock.shares} shares: $#{get_market_value(ticker_sym.to_s, stock.shares)}"
 				end
 			end
 		end
@@ -67,11 +67,7 @@ class Client
       ####################helper functions#########################
       #########################################################
 
-	def get_ticker (ticker_string)
-		YahooFinance::get_quotes(YahooFinance::StandardQuote, ticker_string)[ticker_string].lastTrade
-	end
-
-		#returns false if a portfolio doesn't exist
+	#returns false if a portfolio doesn't exist
 	def portfolio_exists?(port_sym)
 		return false if @portfolios[port_sym] == nil
 		true
@@ -79,11 +75,11 @@ class Client
 
 	#returns false if cliend does not have  enough money for specified stocks
 	def enough_money?(ticker_string, num_stocks_desired)
-		if num_stocks_desired * get_ticker(ticker_string) > @balance 
-			puts "You don't have enough money to do that, that costs #{num_stocks_desired * get_ticker(ticker_string)}, and you have #{balance}"
+		if get_market_value(ticker_string, num_stocks_desired) > @balance 
 			return false
+		else
+			return true
 		end
-		true
 	end
 
 	def enough_stocks?(port_sym, tick_sym, num_stocks_to_sell)
