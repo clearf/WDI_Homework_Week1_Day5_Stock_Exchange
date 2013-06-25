@@ -112,8 +112,9 @@ class Client
   end
 
 ###checks if client has enough money in balance to buy shares of a stock
-  def buy_stock(portfolio_name, stock, number_of_shares_to_buy)
-    total_value = number_of_shares_to_buy * stock.price
+  def buy_stock(portfolio_name, ticker, number_of_shares_to_buy)
+    current_price = YahooFinance::get_quotes(YahooFinance::StandardQuote, ticker.upcase)[ticker.upcase].lastTrade
+    total_value = number_of_shares_to_buy * current_price
     if @balance >= total_value
       ###calls has_portfolio function
       if has_portfolio(portfolio_name)
@@ -121,7 +122,7 @@ class Client
           ###calls add_stock function in portfolio class
           ###updates balance
           if item.name == portfolio_name
-            item.add_stock(stock, number_of_shares_to_buy)
+            item.add_stock(ticker, number_of_shares_to_buy)
             @balance -= total_value
           end
         end
@@ -134,19 +135,19 @@ class Client
   end
 
 ###checks if client has enough shares to sell
-  def sell_stock(portfolio_name, stock, number_of_shares_to_sell)
-    total_value = number_of_shares_to_sell * stock.price
+  def sell_stock(portfolio_name, ticker, number_of_shares_to_sell)
+    total_value = number_of_shares_to_sell * ticker.price
     ###calls has_portfolio function
     if has_portfolio(portfolio_name)
       @portfolios.each do |item|
         if item.name == portfolio_name
           ###calls get_shares_of_stock function in portfolio class
           ###updates balance
-          if item.get_shares_of_stock(stock) >= number_of_shares_to_sell
-            item.remove_stock(stock, number_of_shares_to_sell)
+          if item.get_shares_of_stock(ticker) >= number_of_shares_to_sell
+            item.remove_stock(ticker, number_of_shares_to_sell)
             @balance += total_value
           else
-            puts "You do not have enough shares of #{stock} to sell #{number_of_shares_to_sell}."
+            puts "You do not have enough #{ticker.ticker.upcase} shares to sell #{number_of_shares_to_sell} shares."
           end
         end
       end
@@ -171,10 +172,10 @@ class Portfolio
 
 
 ###searches through stocks array of stock instances and returns boolean
-  def has_stock(stock)
+  def has_stock(ticker)
     found_stock = false
     @stocks.each do |item|
-      if item.ticker == stock
+      if item.ticker == ticker
         found_stock = true
       end
     end
@@ -184,34 +185,34 @@ class Portfolio
 ###searches through stocks array of stock instances
 ###updates number of shares of particular stock (add)
 ###pushes stock into stocks array if new
-  def add_stock(stock, number_of_shares)
-    if has_stock(stock)
+  def add_stock(ticker, number_of_shares)
+    if has_stock(ticker)
       @stocks.each do |item|
-        if item.ticker == stock
-          stock.shares += number_of_shares
+        if item.ticker == ticker
+          item.shares += number_of_shares
         end
       end
     else
-      @stocks << Stock.new(stock, number_of_shares)
+      @stocks << Stock.new(ticker, number_of_shares)
     end
   end
 
 
 ###searches through stocks array of stock instances
 ###updates number of shares of particular stock (subtract)
-  def remove_stock(stock, number_of_shares)
+  def remove_stock(ticker, number_of_shares)
     @stocks.each do |item|
-      if item.ticker == stock
-        stock.shares -= number_of_shares
+      if item.ticker == ticker
+        item.shares -= number_of_shares
       end
     end
   end
 
 ###returns number of shares of stock
-  def get_shares_of_stock(stock)
+  def get_shares_of_stock(ticker)
     number_of_shares = 0
     @stocks.each do |item|
-      if item.ticker == stock
+      if item.ticker == ticker
         number_of_shares = item.shares
       end
     end
@@ -229,6 +230,7 @@ class Portfolio
   end
 
   def to_s
+    puts "#{@name} Portfolio has the following stocks:"
     @stocks.each do |item|
       puts item
     end
@@ -249,35 +251,39 @@ class Stock
 
 ###returns value of shares of stock
   def get_value
-    price = YahooFinance::get_quotes(YahooFinance::StandardQuote, ticker)[ticker].lastTrade
-    return price * @shares
+    current_price = YahooFinance::get_quotes(YahooFinance::StandardQuote, @ticker.upcase)[@ticker.upcase].lastTrade
+    current_price * @shares
   end
 
 
   def to_s
-    #TO DO: grab current price here
-    price = YahooFinance::get_quotes(YahooFinance::StandardQuote, ticker)[ticker].lastTrade
-    return "#{@ticker} is currently trading at #{price}."
+    current_price = YahooFinance::get_quotes(YahooFinance::StandardQuote, @ticker.upcase)[@ticker.upcase].lastTrade
+    return "#{@shares} shares of #{@ticker.upcase} (currently trading at #{current_price})"
   end
 end
 
 
 
 #####Hardcode examples#######
-s1 = Stock.new("CSCO", 100)
-s2 = Stock.new("IBM", 500)
-s3 = Stock.new("WEN", 0)
-p1 = Portfolio.new("Tech")
-p2 = Portfolio.new("Food")
+csco = Stock.new("csco", 100)
+ibm = Stock.new("ibm", 500)
+wen = Stock.new("wen", 0)
+# p1 = Portfolio.new("tech")
+# p2 = Portfolio.new("food")
 client1 = Client.new("Alphonse Von der Strudel", 1000)
-client1.portfolios << p1 << p2
-
+# client1.portfolios << p1 << p2
+# p1.stocks << csco
+# client1.create_portfolio("tech")
+# client1.create_portfolio("food")
+# client1.buy_stock("csco","tech",100)
+# client1.buy_stock("ibm","tech",500)
+# client1.buy_stock("wen","food",1)
 
 
 
 #####Gives readout#####
 
-puts "#{client1.name}'s balance = $#{client1.balance}"
+#puts "#{client1.name}'s balance = $#{client1.balance}"
 
 
 # client1.buy_stock(s1, 200)
@@ -285,8 +291,8 @@ puts "#{client1.name}'s balance = $#{client1.balance}"
 # client1.sell_stock(s1, 100)
 # client1.sell_stock(s2, 400)
 # client1.withdraw_cash
-puts "----------------------------"
+#puts "----------------------------"
 
-puts "#{client1.name}'s balance = $#{client1.balance}"
+#puts "#{client1.name}'s balance = $#{client1.balance}"
 
 binding.pry
