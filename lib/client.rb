@@ -15,6 +15,9 @@ class Client
 
   def buy_stock(ticker, share, port)
     market_price = YahooFinance::get_quotes(YahooFinance::StandardQuote, ticker)[ticker].lastTrade
+    unless market_price.is_a? Float
+      raise "InvalidTicker"
+    end
     stock_value = market_price * share
 
     ticker_array = []
@@ -22,7 +25,8 @@ class Client
 
     # check current balance
     if @balance < stock_value
-      puts "BUY FAIL: #{name} tries to purchase #{share} shares of #{ticker} but balance is too low, order is canceled.\n\n"
+      # raise StandardError
+      return "BUY FAIL: #{name} tries to purchase #{share} shares of #{ticker} but balance is too low, order is canceled.\n\n"
     else
       if ticker_array.include?(ticker) # check if the stock already exists in users portfolio
         find_index = ticker_array.index(ticker)

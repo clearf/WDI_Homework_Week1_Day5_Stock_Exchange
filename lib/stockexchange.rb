@@ -30,8 +30,6 @@ alina.buy_stock("AMT", 2500, "boss")
 alina.buy_stock("AAPL", 300, "partylikearockstar")
 alina.buy_stock("GOOG", 300, "partylikearockstar")
 
-
-
 # A client can sell a stock. The proceeds go into his account.
 kevin.sell_stock("AAPL", 2000, "moneymaker")
 kevin.sell_stock("TSLA", 2000, "moneymaker")
