@@ -12,5 +12,7 @@ class Bank
   def list_clients
     puts "Here's a list of current clients:"
     self.clients.each { |x| puts x.name}
+    puts ""
   end
+
 end

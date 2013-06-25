@@ -12,8 +12,16 @@ class Portfolio
   end
 
   def add_stock(ticker, shares_bought)
-    @inv_count += 1
-    @composition[ticker.to_sym] = shares_bought
+    temp_array = []
+    self.composition.each do |stock, shares|
+      temp_array << stock.to_s
+    end
+    if temp_array.include?(ticker)
+      @composition[ticker.to_sym] += shares_bought
+    else
+      @inv_count += 1
+      @composition[ticker.to_sym] = shares_bought
+    end
     puts "#{shares_bought} of #{ticker} has been added to your portfolio named \"#{@port_name}\"."
     self.calc_port_bal
   end
@@ -37,7 +45,7 @@ class Portfolio
       running_bal += Stock.get_price(x.to_s) * y
     end
     @portfolio_bal = running_bal
-    puts "Current value of #{@port_name} is #{@portfolio_bal}."
+    puts "Account \"#{@port_name}\" value: #{@portfolio_bal}."
   end
 end
 
