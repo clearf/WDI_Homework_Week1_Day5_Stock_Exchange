@@ -29,7 +29,7 @@ class Client
 		tick_sym = tick_string.to_sym
 		return false unless portfolio_exists?(port_sym) && enough_stocks?(port_sym, tick_sym, num_stocks)
 		@portfolios[port_sym].remove_stock(tick_sym, num_stocks)
-		@balance += num_stocks * get_price(tick_string) 
+		@balance += get_market_value(tick_string, num_stocks)
 		puts "	#{@name} just sold #{num_stocks} of his/her shares in #{tick_string}"
 	end
 
