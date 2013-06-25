@@ -10,7 +10,7 @@ attr_accessor :stocks
 		return 0 unless @stocks.any?
 		total_value = 0
 		@stocks.each do |ticker_sym, stock|
-			total_value += stock.stocks_value
+			total_value += stock.get_price
 		end
 		return total_value.round(2)
 	end
@@ -20,7 +20,7 @@ attr_accessor :stocks
 		if @stocks[tick_sym] == nil
 			@stocks[tick_sym] = Stock.new(tick_string, number)
 		else
-			@stocks[tick_sym].shares += number
+			@stocks[tick_sym].add_shares number
 		end
 	end
 
@@ -33,7 +33,7 @@ attr_accessor :stocks
 			@stocks.delete(tick_sym)
 			return true
 		else
-			@stocks[tick_sym].shares -= number
+			@stocks[tick_sym].remove_shares number
 			true
 		end
 	end

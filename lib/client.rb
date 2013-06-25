@@ -9,7 +9,7 @@ class Client
 		@balance = balance.to_f
 		@portfolios = {}
 	end
-	
+
 	############################################################
       ####################interfacing functions######################### 
       ############################################################
@@ -55,7 +55,7 @@ class Client
 			else
 				puts ": value: $#{portfolio.portfolio_value}"
 				portfolio.stocks.each do |ticker_sym, stock|
-			    		puts "    		#{ticker_sym.to_s}: #{stock.shares} shares: $#{stock.stocks_value}"
+			    		puts "    		#{ticker_sym.to_s}: #{stock.shares} shares: $#{stock.get_price}"
 				end
 			end
 		end
