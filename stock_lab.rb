@@ -56,13 +56,32 @@ end
 
 class Client
 	# cash_balance
-	def initialize(cash_balance)
+	def initialize(initial_cash_balance)
 		@portfolios = {}
-		@cash_balance
+		@cash_balance=initial_cash_balance
 	end	
 
-	def enough_money?(ticker, shares)
+	def add_portfolio(portfolio_name)
+		# Check to see if portfolio exists
+		# add it if it doesn't
+	end	
 
+	def add_stock_to_portfolio(portfolio_name, ticker, shares)
+		# XXX check to make sure portfolio exists, and if it does
+		portfolio = @portfolios[portfolio_name]
+		if self.enough_money?(ticker,shares)
+			portfolio.add_stock(ticker, number_of_shares
+		else
+			puts "Not enough money"
+		end	
+	end	
+	def enough_money?(ticker, shares)
+		transaction_cost = get_transaction_value(ticker,shares)
+		if transaction_cost > @cash_balance
+			return false
+		else
+			return true
+		end
 	end	
 end	
 
