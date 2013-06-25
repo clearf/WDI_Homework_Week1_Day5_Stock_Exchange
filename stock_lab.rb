@@ -1,5 +1,14 @@
 require	'yahoofinance'
 
+def get_stock_price(ticker)
+	return YahooFinance::get_quotes(YahooFinance::StandardQuote, 
+			ticker)[ticker].lastTrade
+end	
+
+def get_transaction_value(ticker, shares)
+		return get_stock_price(ticker) * shares
+end
+
 class Stock
 	attr_reader :ticker, :number_of_shares
 	# ticker
@@ -24,8 +33,7 @@ class Stock
 	end
 
 	def get_price
-		return YahooFinance::get_quotes(YahooFinance::StandardQuote, 
-			@ticker)[@ticker].lastTrade
+		get_stock_price(@ticker)
 	end	
 end
 
@@ -36,6 +44,7 @@ class Portfolio
 		@stocks={}
 	end	
 
+	# Pass balance here? 
 	def add_stock(ticker, number_of_shares)
 		if @stocks[ticker]
 			# we already have a stock that exists
@@ -47,8 +56,13 @@ end
 
 class Client
 	# cash_balance
-	def initialize
+	def initialize(cash_balance)
 		@portfolios = {}
+		@cash_balance
+	end	
+
+	def enough_money?(ticker, shares)
+
 	end	
 end	
 
